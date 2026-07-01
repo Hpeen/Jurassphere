@@ -1,7 +1,10 @@
 # Jurassphere
 
+**Live site:** https://hpeen.github.io/Jurassphere/
+
 An interactive 3D globe for exploring real dinosaur fossil-excavation sites.
-Spin the Earth, click glowing markers, and read about the dinosaurs found there.
+Spin the Earth, click the markers, and read about the dinosaurs found there —
+styled as a paleontology field catalogue.
 
 ## Features
 - Spinnable 3D globe (globe.gl / three.js)
@@ -15,8 +18,10 @@ Spin the Earth, click glowing markers, and read about the dinosaurs found there.
 ES modules need an HTTP server (not file://):
 
 ```bash
+npx serve .          # Node (no install needed)
+# or, if you have Python:
 python -m http.server 8000
-# then open http://localhost:8000
+# then open the printed localhost URL
 ```
 
 ## Tests (pure-logic modules)
