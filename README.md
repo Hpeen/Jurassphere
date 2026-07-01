@@ -1,33 +1,36 @@
 # Jurassphere
 
-**Live site:** https://hpeen.github.io/Jurassphere/
+Live site: https://hpeen.github.io/Jurassphere/
 
-An interactive 3D globe for exploring real dinosaur fossil-excavation sites.
-Spin the Earth, click the markers, and read about the dinosaurs found there —
-styled as a paleontology field catalogue.
+An interactive 3D globe for exploring real dinosaur fossil sites. Spin the Earth, click a marker, and a panel opens with details about the dinosaur found there. You can filter by geologic period, or search a dinosaur by name and let the globe fly you straight to its dig sites. Think Google Earth, if the only thing it cared about was dinosaurs.
+
+The fossil data comes live from the Paleobiology Database, a public science API, with a curated backup list so the map is never empty. It's plain HTML, CSS, and JavaScript with no framework, styled like an old paleontology field guide.
 
 ## Features
-- Spinnable 3D globe (globe.gl / three.js)
-- Live fossil data from the Paleobiology Database (PBDB) API, with curated fallback
-- Slide-in info panel per site
-- Geologic-era filter (Triassic / Jurassic / Cretaceous)
-- Search a dinosaur and fly the camera to its sites
-- Intro animation + optional ambient sound
+- A 3D globe you can spin and zoom, built with globe.gl
+- Live fossil data from the Paleobiology Database, with a curated fallback for when the API is down
+- Click a marker to open its field record
+- Filter by period: Triassic, Jurassic, or Cretaceous
+- Search a dinosaur by name and fly the camera to its sites
+- Intro animation and optional ambient sound
 
 ## Run locally
-ES modules need an HTTP server (not file://):
+The site uses ES modules, so it needs a local server instead of opening the file directly:
 
 ```bash
-npx serve .          # Node (no install needed)
-# or, if you have Python:
+npx serve .
+# or, if you have Python installed:
 python -m http.server 8000
-# then open the printed localhost URL
 ```
 
-## Tests (pure-logic modules)
+Then open the URL it prints.
+
+## Tests
+The data logic (fossil parsing, era classification, filtering, and search) is covered by tests:
+
 ```bash
 node --test
 ```
 
 ## Deploy
-Hosted on GitHub Pages from this repo. See DEVLOG.md for build notes.
+It's hosted on GitHub Pages straight from this repo. Every push to `main` redeploys automatically. Build notes are in DEVLOG.md.
