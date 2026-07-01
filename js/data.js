@@ -39,3 +39,27 @@ export function normalizeAll(records) {
   }
   return out;
 }
+
+const PBDB_URL =
+  "https://paleobiodb.org/data1.2/occs/list.json" +
+  "?base_name=Dinosauria&show=coords,loc&vocab=pbdb&idreso=genus&limit=800";
+
+// Fetch live occurrences; fall back to the curated dataset on any failure.
+export async function loadSites() {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(PBDB_URL, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`PBDB HTTP ${res.status}`);
+    const json = await res.json();
+    const sites = normalizeAll(json.records || []);
+    if (sites.length === 0) throw new Error("PBDB returned no usable records");
+    return { sites, source: "PBDB live API" };
+  } catch (err) {
+    console.warn("PBDB fetch failed, using fallback:", err.message);
+    const res = await fetch("data/fallback.json");
+    const sites = await res.json();
+    return { sites, source: "curated fallback" };
+  }
+}
