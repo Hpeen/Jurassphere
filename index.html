@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jurassphere — Explore Fossil Sites on a 3D Globe</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="intro" class="intro">
+    <h1 class="intro-title">JURASSPHERE</h1>
+    <p class="intro-tagline">Spin the Earth. Uncover the dinosaurs.</p>
+  </div>
+
+  <header class="hud">
+    <div class="brand">JURASSPHERE</div>
+    <div class="controls">
+      <input id="search" class="search" type="text" placeholder="Search a dinosaur…" autocomplete="off" />
+      <div class="eras" id="eras">
+        <button class="era-btn active" data-era="All">All</button>
+        <button class="era-btn" data-era="Triassic">Triassic</button>
+        <button class="era-btn" data-era="Jurassic">Jurassic</button>
+        <button class="era-btn" data-era="Cretaceous">Cretaceous</button>
+      </div>
+      <button id="mute" class="mute" title="Toggle ambient sound">🔊</button>
+    </div>
+  </header>
+
+  <div id="status" class="status" hidden></div>
+  <main id="globe" class="globe"></main>
+
+  <aside id="panel" class="panel" aria-hidden="true">
+    <button id="panel-close" class="panel-close" aria-label="Close">×</button>
+    <div class="panel-image" id="panel-image"></div>
+    <h2 id="panel-title" class="panel-title"></h2>
+    <div id="panel-era" class="panel-era"></div>
+    <div id="panel-location" class="panel-location"></div>
+    <p id="panel-desc" class="panel-desc"></p>
+  </aside>
+
+  <script src="https://unpkg.com/globe.gl"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
