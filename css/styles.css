@@ -1,2 +1,108 @@
-/* Neon Jurassic theme — filled in Task 8 */
-body { margin: 0; background: #04100a; color: #e8ffe8; font-family: system-ui, sans-serif; }
+:root {
+  --bg-0: #04100a;
+  --bg-1: #0a1f16;
+  --panel: #0c1a12;
+  --line: #1c3326;
+  --text: #e8ffe8;
+  --muted: #8fb79c;
+  --accent: #f0a437;
+  --neon: #37e08b;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: radial-gradient(circle at 50% 40%, var(--bg-1), var(--bg-0));
+  overflow: hidden;
+}
+
+/* Intro overlay */
+.intro {
+  position: fixed; inset: 0; z-index: 30;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 45%, #0a1f16, #04100a);
+  transition: opacity 0.9s ease, visibility 0.9s ease;
+}
+.intro.hidden { opacity: 0; visibility: hidden; }
+.intro-title {
+  font-size: clamp(2.5rem, 9vw, 6rem); letter-spacing: 0.35em; margin: 0;
+  color: var(--neon); text-shadow: 0 0 24px #37e08b88; animation: pulse 2.4s infinite;
+}
+.intro-tagline { color: var(--accent); letter-spacing: 0.2em; margin-top: 1rem; }
+@keyframes pulse { 50% { text-shadow: 0 0 40px #37e08bcc; } }
+
+/* HUD header */
+.hud {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; gap: 16px;
+  background: linear-gradient(180deg, #04100acc, transparent);
+}
+.brand { font-weight: 800; letter-spacing: 0.3em; color: var(--neon); text-shadow: 0 0 12px #37e08b66; }
+.controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.search {
+  background: #0c1a12; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 14px; border-radius: 999px; outline: none; min-width: 200px;
+}
+.search:focus { border-color: var(--neon); box-shadow: 0 0 0 2px #37e08b33; }
+
+.eras { display: flex; gap: 6px; }
+.era-btn {
+  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;
+}
+.era-btn:hover { color: var(--text); border-color: var(--accent); }
+.era-btn.active { color: #04100a; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+
+.mute { background: transparent; border: none; font-size: 1.3rem; cursor: pointer; }
+
+/* Status toast */
+.status {
+  position: fixed; top: 72px; left: 50%; transform: translateX(-50%); z-index: 20;
+  background: #0c1a12ee; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 16px; border-radius: 999px; font-size: 0.9rem;
+}
+
+/* Globe */
+.globe { position: fixed; inset: 0; z-index: 1; }
+
+/* Slide-in panel */
+.panel {
+  position: fixed; top: 0; right: 0; z-index: 25; height: 100%;
+  width: min(380px, 88vw); padding: 64px 26px 26px;
+  background: linear-gradient(180deg, var(--panel), #04100a);
+  border-left: 2px solid var(--neon);
+  box-shadow: -12px 0 40px #000a; transform: translateX(105%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto;
+}
+.panel.open { transform: translateX(0); }
+.panel-close {
+  position: absolute; top: 16px; right: 18px; background: transparent; border: none;
+  color: var(--muted); font-size: 1.8rem; line-height: 1; cursor: pointer;
+}
+.panel-close:hover { color: var(--neon); }
+.panel-image {
+  height: 160px; border-radius: 12px; margin-bottom: 18px;
+  background-size: cover; background-position: center;
+  border: 1px solid var(--line);
+}
+.panel-image.placeholder {
+  display: flex; align-items: center; justify-content: center; font-size: 3rem;
+  background: radial-gradient(circle at 50% 40%, #12281c, #0a1f16);
+}
+.panel-title { margin: 0 0 10px; color: var(--neon); font-size: 1.5rem; }
+.panel-era {
+  display: inline-block; padding: 3px 12px; border-radius: 999px;
+  background: var(--accent); color: #04100a; font-weight: 700; font-size: 0.8rem;
+}
+.panel-location { color: var(--muted); margin: 12px 0 16px; }
+.panel-desc { line-height: 1.6; }
+
+@media (max-width: 600px) {
+  .brand { display: none; }
+  .search { min-width: 140px; }
+}
