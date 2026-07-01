@@ -1,108 +1,227 @@
+/* ============================================================
+   Jurassphere — "Field Catalogue" theme
+   A natural-history / paleontology field-guide aesthetic.
+   No neon, no glow — earthy specimen colours, footprint motifs,
+   rock-strata textures, and characterful editorial type.
+   ============================================================ */
+
 :root {
-  --bg-0: #04100a;
-  --bg-1: #0a1f16;
-  --panel: #0c1a12;
-  --line: #1c3326;
-  --text: #e8ffe8;
-  --muted: #8fb79c;
-  --accent: #f0a437;
-  --neon: #37e08b;
+  --bg-0: #0c110d;   /* deep charcoal-green */
+  --bg-1: #141b15;
+  --panel: #14100c;  /* dark soil */
+  --bone: #ece3cf;   /* parchment / bone */
+  --ink: #e7dfcd;    /* warm off-white text */
+  --muted: #8a9382;  /* lichen grey-green */
+  --line: #2c3a2c;   /* hairline borders */
+  --ochre: #c9a24a;  /* Triassic */
+  --moss: #7f9b63;   /* Jurassic */
+  --rust: #c25a34;   /* Cretaceous */
+  --amber: #d08a3a;  /* general accent */
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
+
 body {
   margin: 0;
-  color: var(--text);
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: radial-gradient(circle at 50% 40%, var(--bg-1), var(--bg-0));
+  color: var(--ink);
+  font-family: var(--font-body);
+  background: var(--bg-0);
   overflow: hidden;
 }
 
-/* Intro overlay */
+/* Film-grain / sediment overlay for tactile texture (no glow) */
+.grain {
+  position: fixed; inset: 0; z-index: 40; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Intro overlay ---------- */
 .intro {
   position: fixed; inset: 0; z-index: 30;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: radial-gradient(circle at 50% 45%, #0a1f16, #04100a);
-  transition: opacity 0.9s ease, visibility 0.9s ease;
+  gap: 0.4rem; text-align: center;
+  background:
+    radial-gradient(120% 90% at 50% 8%, #1a2419 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+  transition: opacity 1s ease, visibility 1s ease;
 }
 .intro.hidden { opacity: 0; visibility: hidden; }
-.intro-title {
-  font-size: clamp(2.5rem, 9vw, 6rem); letter-spacing: 0.35em; margin: 0;
-  color: var(--neon); text-shadow: 0 0 24px #37e08b88; animation: pulse 2.4s infinite;
-}
-.intro-tagline { color: var(--accent); letter-spacing: 0.2em; margin-top: 1rem; }
-@keyframes pulse { 50% { text-shadow: 0 0 40px #37e08bcc; } }
 
-/* HUD header */
+.intro .trackway {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  fill: var(--moss); opacity: 0.10; pointer-events: none;
+}
+
+.intro-kicker {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.42em;
+  text-transform: uppercase; color: var(--ochre); margin: 0 0 0.6rem;
+  padding-bottom: 0.7rem; border-bottom: 1px solid var(--line);
+}
+.intro-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto; font-weight: 900; font-style: italic;
+  font-size: clamp(3rem, 12vw, 8.5rem); line-height: 0.9; margin: 0;
+  color: var(--bone); letter-spacing: -0.02em;
+}
+.intro-tagline {
+  font-family: var(--font-mono); font-size: clamp(0.8rem, 1.6vw, 1rem);
+  letter-spacing: 0.18em; color: var(--muted); margin: 0.9rem 0 0;
+}
+
+/* ---------- HUD header ---------- */
 .hud {
   position: fixed; top: 0; left: 0; right: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px; gap: 16px;
-  background: linear-gradient(180deg, #04100acc, transparent);
+  padding: 16px 22px; gap: 18px;
+  background: linear-gradient(180deg, rgba(10,14,10,0.92), rgba(10,14,10,0.55) 70%, transparent);
 }
-.brand { font-weight: 800; letter-spacing: 0.3em; color: var(--neon); text-shadow: 0 0 12px #37e08b66; }
-.controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 1.35rem;
+  color: var(--bone); letter-spacing: 0.01em;
+}
+.brand-mark { width: 18px; height: 22px; fill: var(--ochre); transform: rotate(-12deg); }
+
+.controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 
 .search {
-  background: #0c1a12; border: 1px solid var(--line); color: var(--text);
-  padding: 8px 14px; border-radius: 999px; outline: none; min-width: 200px;
+  background: rgba(10,14,10,0.6);
+  border: 1px solid var(--line); color: var(--ink);
+  font-family: var(--font-mono); font-size: 0.82rem;
+  padding: 9px 14px; border-radius: 2px; outline: none; min-width: 210px;
+  transition: border-color 0.2s;
 }
-.search:focus { border-color: var(--neon); box-shadow: 0 0 0 2px #37e08b33; }
+.search::placeholder { color: var(--muted); }
+.search:focus { border-color: var(--ochre); }
 
-.eras { display: flex; gap: 6px; }
+/* Era filter — museum specimen tags */
+.eras { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
 .era-btn {
+  position: relative;
+  background: transparent; border: none; border-left: 1px solid var(--line);
+  color: var(--muted); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 9px 13px; transition: color 0.18s, background 0.18s;
+}
+.era-btn:first-child { border-left: none; }
+.era-btn::before {
+  content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px;
+  vertical-align: middle; border-radius: 50%; background: currentColor; opacity: 0.55;
+}
+.era-btn[data-era="Triassic"]::before { background: var(--ochre); opacity: 1; }
+.era-btn[data-era="Jurassic"]::before { background: var(--moss); opacity: 1; }
+.era-btn[data-era="Cretaceous"]::before { background: var(--rust); opacity: 1; }
+.era-btn:hover { color: var(--ink); background: rgba(201,162,74,0.06); }
+.era-btn.active { color: var(--bg-0); background: var(--bone); }
+.era-btn.active::before { opacity: 1; }
+
+.mute {
   background: transparent; border: 1px solid var(--line); color: var(--muted);
-  padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 9px 12px; border-radius: 2px; cursor: pointer;
+  transition: color 0.18s, border-color 0.18s;
 }
-.era-btn:hover { color: var(--text); border-color: var(--accent); }
-.era-btn.active { color: #04100a; background: var(--accent); border-color: var(--accent); font-weight: 700; }
+.mute:hover { color: var(--ink); border-color: var(--ochre); }
+.mute[aria-pressed="true"] { color: var(--ochre); border-color: var(--ochre); }
 
-.mute { background: transparent; border: none; font-size: 1.3rem; cursor: pointer; }
-
-/* Status toast */
+/* ---------- Status label ---------- */
 .status {
-  position: fixed; top: 72px; left: 50%; transform: translateX(-50%); z-index: 20;
-  background: #0c1a12ee; border: 1px solid var(--line); color: var(--text);
-  padding: 8px 16px; border-radius: 999px; font-size: 0.9rem;
+  position: fixed; top: 78px; left: 50%; transform: translateX(-50%); z-index: 20;
+  background: var(--bone); color: var(--bg-0);
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em;
+  padding: 7px 15px; border-radius: 2px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
-/* Globe */
+/* ---------- Globe ---------- */
 .globe { position: fixed; inset: 0; z-index: 1; }
 
-/* Slide-in panel */
+/* ---------- Slide-in Field Record ---------- */
 .panel {
   position: fixed; top: 0; right: 0; z-index: 25; height: 100%;
-  width: min(380px, 88vw); padding: 64px 26px 26px;
-  background: linear-gradient(180deg, var(--panel), #04100a);
-  border-left: 2px solid var(--neon);
-  box-shadow: -12px 0 40px #000a; transform: translateX(105%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto;
+  width: min(390px, 90vw); padding: 70px 30px 30px;
+  background:
+    linear-gradient(180deg, #191308 0%, var(--panel) 60%, #0d0a06 100%);
+  border-left: 3px solid var(--ochre);
+  box-shadow: -16px 0 44px rgba(0,0,0,0.5);
+  transform: translateX(105%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
 }
 .panel.open { transform: translateX(0); }
+
 .panel-close {
-  position: absolute; top: 16px; right: 18px; background: transparent; border: none;
-  color: var(--muted); font-size: 1.8rem; line-height: 1; cursor: pointer;
+  position: absolute; top: 18px; right: 20px; z-index: 2;
+  width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 2px;
+  background: transparent; color: var(--muted);
+  font-size: 1.4rem; line-height: 1; cursor: pointer; transition: color 0.18s, border-color 0.18s;
 }
-.panel-close:hover { color: var(--neon); }
+.panel-close:hover { color: var(--bone); border-color: var(--ochre); }
+
 .panel-image {
-  height: 160px; border-radius: 12px; margin-bottom: 18px;
+  height: 168px; border-radius: 2px; margin-bottom: 20px;
   background-size: cover; background-position: center;
   border: 1px solid var(--line);
 }
 .panel-image.placeholder {
-  display: flex; align-items: center; justify-content: center; font-size: 3rem;
-  background: radial-gradient(circle at 50% 40%, #12281c, #0a1f16);
+  display: flex; align-items: center; justify-content: center;
+  background:
+    repeating-linear-gradient(180deg, #1b140b 0 12px, #191208 12px 24px);
+  border-style: dashed;
 }
-.panel-title { margin: 0 0 10px; color: var(--neon); font-size: 1.5rem; }
-.panel-era {
-  display: inline-block; padding: 3px 12px; border-radius: 999px;
-  background: var(--accent); color: #04100a; font-weight: 700; font-size: 0.8rem;
+.panel-image.placeholder::after {
+  content: ""; width: 70px; height: 84px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%237f9b63'%3E%3Cellipse cx='50' cy='86' rx='16' ry='22'/%3E%3Cpath d='M50 66C45 40 47 22 50 12 53 22 55 40 50 66Z'/%3E%3Cpath d='M39 72C27 52 21 40 17 30 29 37 39 51 45 66Z'/%3E%3Cpath d='M61 72C73 52 79 40 83 30 71 37 61 51 55 66Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: 0.55; transform: rotate(-8deg);
 }
-.panel-location { color: var(--muted); margin: 12px 0 16px; }
-.panel-desc { line-height: 1.6; }
 
-@media (max-width: 600px) {
-  .brand { display: none; }
-  .search { min-width: 140px; }
+.panel-record {
+  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.34em;
+  text-transform: uppercase; color: var(--ochre); margin: 0 0 6px;
+}
+.panel-title {
+  font-family: var(--font-display); font-weight: 600; font-style: italic;
+  font-size: 1.75rem; line-height: 1.05; margin: 0 0 14px; color: var(--bone);
+}
+.panel-era {
+  display: inline-block; font-family: var(--font-mono); font-size: 0.68rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 11px; border-radius: 2px; color: var(--bg-0); background: var(--muted);
+}
+.panel-era[data-era="Triassic"] { background: var(--ochre); }
+.panel-era[data-era="Jurassic"] { background: var(--moss); }
+.panel-era[data-era="Cretaceous"] { background: var(--rust); }
+
+.panel-coords {
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--ochre);
+  margin: 16px 0 4px; letter-spacing: 0.02em;
+}
+.panel-location {
+  font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted);
+  margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px solid var(--line);
+}
+.panel-desc { font-size: 0.98rem; line-height: 1.65; color: var(--ink); }
+
+/* Rock-strata band anchored to the bottom of the record */
+.strata {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(201,162,74,0.10) 0 6px,
+    rgba(194,90,52,0.08) 6px 13px,
+    rgba(127,155,99,0.08) 13px 22px,
+    rgba(0,0,0,0.16) 22px 30px
+  );
+  border-top: 1px solid var(--line); opacity: 0.8;
+}
+
+@media (max-width: 620px) {
+  .brand span { display: none; }
+  .search { min-width: 150px; }
+  .era-btn { padding: 8px 9px; }
 }

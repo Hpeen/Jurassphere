@@ -3,26 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jurassphere — Explore Fossil Sites on a 3D Globe</title>
+  <title>Jurassphere — A Field Guide to Fossil Sites on a 3D Globe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <!-- Reusable dinosaur footprint (three-toed theropod track) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="track" viewBox="0 0 100 120">
+      <ellipse cx="50" cy="86" rx="16" ry="22" />
+      <path d="M50 66C45 40 47 22 50 12 53 22 55 40 50 66Z" />
+      <path d="M39 72C27 52 21 40 17 30 29 37 39 51 45 66Z" />
+      <path d="M61 72C73 52 79 40 83 30 71 37 61 51 55 66Z" />
+    </symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+
   <div id="intro" class="intro">
-    <h1 class="intro-title">JURASSPHERE</h1>
-    <p class="intro-tagline">Spin the Earth. Uncover the dinosaurs.</p>
+    <svg class="trackway" viewBox="0 0 900 500" aria-hidden="true">
+      <use href="#track" x="40"  y="360" width="46" transform="rotate(24 63 383)" />
+      <use href="#track" x="190" y="300" width="46" transform="rotate(-8 213 323)" />
+      <use href="#track" x="330" y="250" width="46" transform="rotate(20 353 273)" />
+      <use href="#track" x="470" y="190" width="46" transform="rotate(-10 493 213)" />
+      <use href="#track" x="620" y="140" width="46" transform="rotate(22 643 163)" />
+      <use href="#track" x="760" y="80"  width="46" transform="rotate(-6 783 103)" />
+    </svg>
+    <p class="intro-kicker">Est. Mesozoic · Field Catalogue N°&#8202;01</p>
+    <h1 class="intro-title">Jurassphere</h1>
+    <p class="intro-tagline">Spin the Earth. Unearth the dinosaurs.</p>
   </div>
 
   <header class="hud">
-    <div class="brand">JURASSPHERE</div>
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 120" aria-hidden="true"><use href="#track" /></svg>
+      <span>Jurassphere</span>
+    </div>
     <div class="controls">
-      <input id="search" class="search" type="text" placeholder="Search a dinosaur…" autocomplete="off" />
-      <div class="eras" id="eras">
+      <input id="search" class="search" type="text" placeholder="find a dinosaur…" autocomplete="off" />
+      <div class="eras" id="eras" role="group" aria-label="Filter by geologic period">
         <button class="era-btn active" data-era="All">All</button>
         <button class="era-btn" data-era="Triassic">Triassic</button>
         <button class="era-btn" data-era="Jurassic">Jurassic</button>
         <button class="era-btn" data-era="Cretaceous">Cretaceous</button>
       </div>
-      <button id="mute" class="mute" title="Toggle ambient sound">🔊</button>
+      <button id="mute" class="mute" type="button" aria-pressed="false" title="Toggle ambient sound">Sound&nbsp;·&nbsp;off</button>
     </div>
   </header>
 
@@ -30,12 +57,15 @@
   <main id="globe" class="globe"></main>
 
   <aside id="panel" class="panel" aria-hidden="true">
-    <button id="panel-close" class="panel-close" aria-label="Close">×</button>
+    <button id="panel-close" class="panel-close" aria-label="Close record">&times;</button>
     <div class="panel-image" id="panel-image"></div>
+    <p class="panel-record">Field Record</p>
     <h2 id="panel-title" class="panel-title"></h2>
     <div id="panel-era" class="panel-era"></div>
+    <div id="panel-coords" class="panel-coords"></div>
     <div id="panel-location" class="panel-location"></div>
     <p id="panel-desc" class="panel-desc"></p>
+    <div class="strata" aria-hidden="true"></div>
   </aside>
 
   <script src="https://unpkg.com/globe.gl"></script>

@@ -1,8 +1,8 @@
 // Wraps the global `Globe` from the globe.gl CDN script.
 const ERA_COLORS = {
-  Triassic: "#37e08b",
-  Jurassic: "#f0a437",
-  Cretaceous: "#ff6b3d"
+  Triassic: "#c9a24a",  // ochre
+  Jurassic: "#7f9b63",  // moss
+  Cretaceous: "#c25a34" // rust
 };
 
 export function createGlobe(el, onPointClick) {

@@ -35,6 +35,7 @@ export function initAudioToggle() {
     if (audioCtx.state === "suspended") audioCtx.resume();
     muted = !muted;
     ambientNode.gain.value = muted ? 0 : 0.04;
-    btn.textContent = muted ? "🔊" : "🔇";
+    btn.setAttribute("aria-pressed", String(!muted));
+    btn.textContent = muted ? "Sound · off" : "Sound · on";
   });
 }
