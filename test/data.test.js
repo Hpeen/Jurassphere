@@ -24,6 +24,8 @@ test("normalizeOccurrence builds a site object", () => {
   assert.equal(site.lat, 47.6);
   assert.equal(site.lng, -106.6);
   assert.equal(site.era, "Cretaceous");
+  assert.equal(site.maxMa, 68);
+  assert.equal(site.minMa, 66);
   assert.equal(site.location, "Montana, US");
 });
 

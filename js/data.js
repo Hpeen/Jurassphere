@@ -15,6 +15,8 @@ export function normalizeOccurrence(record) {
   const name = record.accepted_name || record.identified_name || "Unknown taxon";
   const location =
     [record.state, record.cc].filter(Boolean).join(", ") || "Unknown location";
+  const maxMa = parseFloat(record.max_ma);
+  const minMa = parseFloat(record.min_ma);
 
   return {
     id: String(record.occurrence_no),
@@ -23,6 +25,8 @@ export function normalizeOccurrence(record) {
     lat,
     lng,
     era: classifyEra(record.max_ma, record.min_ma),
+    maxMa: Number.isNaN(maxMa) ? null : maxMa,
+    minMa: Number.isNaN(minMa) ? null : minMa,
     location,
     description: `${name} — found in rocks dated about ${record.max_ma}–${record.min_ma} million years ago.`,
     image: null
