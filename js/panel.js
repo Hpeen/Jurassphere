@@ -22,6 +22,11 @@ export function initPanel() {
   els.source = document.getElementById("panel-source");
   document.getElementById("panel-close").addEventListener("click", closePanel);
 
+  // Escape closes the open record (keyboard accessibility).
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && els.panel.classList.contains("open")) closePanel();
+  });
+
   if (!("speechSynthesis" in window)) els.say.style.display = "none";
 }
 
