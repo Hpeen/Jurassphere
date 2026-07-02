@@ -26,3 +26,17 @@
   credited in the README.
 - Pushed the visual theme toward a prehistoric-jungle field expedition:
   deeper canopy greens, amber/resin accents, ferns and fossil motifs.
+
+## 2026-07-02 — Records, interactivity & biomes (v1.2)
+- Made the site friendly for everyone, not just specialists. Field records were
+  bare (the PBDB API only gives name/coords/era), so each record now enriches
+  itself from Wikipedia's free REST summary API — a plain-language paragraph and
+  a real photo — cached per genus, with the curated blurb as a silent fallback.
+- Added interactive record extras: a size-vs-human comparison bar, click-to-hear
+  name pronunciation (Web Speech), a phonetic spelling, and diet/length/weight
+  badges. Backed by a curated `data/traits.json` (44 common genera).
+- The scene now reskins to the chosen dig's region — jungle, desert, polar, or
+  plains — swapping the ground colour and the corner silhouettes (ferns → cactus
+  and dune, fir trees, or tall grass). Biome is classified from coordinates in a
+  small pure module (`js/biome.js`), unit-tested.
+- Lowered the ambient/roar volumes. Test suite now 13/13.

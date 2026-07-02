@@ -3,12 +3,14 @@ import { createGlobe, setPoints, flyTo } from "./globe.js";
 import { initPanel, openPanel } from "./panel.js";
 import { filterByEra, searchSites } from "./filters.js";
 import { playIntro, initAudioToggle } from "./audio.js";
+import { loadTraits } from "./traits.js";
 
 const el = document.getElementById("globe");
 const statusEl = document.getElementById("status");
 initPanel();
 playIntro();
 initAudioToggle();
+loadTraits(); // curated size/diet data for the field records
 const globe = createGlobe(el, (site) => openPanel(site));
 
 let allSites = [];

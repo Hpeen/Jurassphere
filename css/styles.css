@@ -315,7 +315,7 @@ body::after {
    ------------------------------------------------------------ */
 .panel {
   position: fixed; top: 0; right: 0; z-index: 25; height: 100%;
-  width: min(392px, 92vw); padding: 66px 28px 84px 46px;
+  width: min(392px, 92vw); padding: 0;
   color: var(--umber);
   background:
     var(--ammonite-faint) right -48px bottom 66px / 230px auto no-repeat,
@@ -469,4 +469,118 @@ body::after {
   .intro .trackway use { animation: none; opacity: 1; }
   .intro { transition: none; }
   .panel { transition: none; }
+}
+
+/* ============================================================
+   Field-record extras — pronounce, badges, size chart, source.
+   Scroll container so a rich record never overflows the page.
+   ============================================================ */
+.panel-scroll {
+  position: relative; z-index: 2;
+  height: 100%; overflow-y: auto; overflow-x: hidden;
+  padding: 66px 26px 96px 46px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: rgba(93, 72, 38, 0.4) transparent;
+}
+.panel-scroll::-webkit-scrollbar { width: 9px; }
+.panel-scroll::-webkit-scrollbar-track { background: transparent; }
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(93, 72, 38, 0.4); border-radius: 5px;
+  border: 2px solid transparent; background-clip: padding-box;
+}
+
+.panel-head { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 6px; }
+.panel-head .panel-title { margin: 0; flex: 1 1 auto; }
+
+.panel-say {
+  flex: 0 0 auto; margin-top: 4px; padding: 0;
+  width: 30px; height: 30px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(70, 54, 26, 0.4); border-radius: 2px;
+  background: rgba(122, 94, 48, 0.09); color: #8a3c20; cursor: pointer;
+  transition: color 0.18s, background-color 0.18s, border-color 0.18s;
+}
+.panel-say:hover { color: var(--page-hi); background: #8a3c20; border-color: #8a3c20; }
+.panel-say svg { width: 16px; height: 16px; fill: currentColor; }
+
+.panel-phonetic {
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em;
+  color: #7a5326; margin: 0 0 12px;
+}
+
+.panel-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 2px; }
+.badge {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #3a2f1a;
+  padding: 4px 9px; border-radius: 2px;
+  border: 1px solid rgba(70, 54, 26, 0.35); background: rgba(122, 94, 48, 0.1);
+}
+.badge.diet-carnivore { color: #7a2f18; border-color: rgba(122, 47, 24, 0.4); background: rgba(194, 84, 47, 0.12); }
+.badge.diet-piscivore { color: #285a63; border-color: rgba(40, 90, 99, 0.4); background: rgba(40, 90, 99, 0.12); }
+.badge.diet-herbivore { color: #3f5a24; border-color: rgba(63, 90, 36, 0.4); background: rgba(127, 162, 78, 0.14); }
+.badge.diet-omnivore  { color: #6a4a1e; border-color: rgba(106, 74, 30, 0.4); background: rgba(216, 166, 58, 0.14); }
+
+.panel-size { margin: 18px 0 4px; }
+.size-label {
+  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #7a5326; margin-bottom: 10px;
+}
+.size-track {
+  position: relative; height: 14px; margin-bottom: 26px; border-radius: 2px;
+  border: 1px solid rgba(70, 54, 26, 0.3);
+  background: repeating-linear-gradient(90deg, rgba(93, 72, 38, 0.12) 0 9px, rgba(93, 72, 38, 0.04) 9px 10px);
+}
+.size-dino {
+  position: absolute; left: 0; top: 0; bottom: 0; border-radius: 1px;
+  background: linear-gradient(180deg, #7a5a2c, #5d4826);
+}
+.size-human { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #8a3c20; transform: translateX(-1px); }
+.size-human::after {
+  content: "you"; position: absolute; top: 100%; left: 50%; margin-top: 4px;
+  transform: translateX(-50%); white-space: nowrap;
+  font-family: var(--font-mono); font-size: 0.54rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #8a3c20;
+}
+.size-note { font-family: var(--font-script); font-size: 1.05rem; color: #4a3c22; transform: rotate(-0.5deg); }
+
+.panel-age {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em;
+  color: #7a5326; margin: 2px 0 0;
+}
+
+.panel-source {
+  display: inline-block; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.03em;
+  color: #8a3c20; text-decoration: none;
+  border-bottom: 1px solid rgba(138, 60, 32, 0.5); padding-bottom: 1px;
+}
+.panel-source:hover { color: #5d4826; border-bottom-color: #5d4826; }
+
+/* ============================================================
+   Biome reskins — the scene shifts to the chosen dig's region.
+   Only the ground colour and the corner motifs change; the globe
+   and parchment record stay legible.
+   ============================================================ */
+:root {
+  /* desert — saguaro cactus over a dune */
+  --dune-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cpath fill='%232a1c0e' d='M0 380 Q120 322 300 350 L300 380 Z'/%3E%3Cg fill='none' stroke='%23241708' stroke-width='20' stroke-linecap='round'%3E%3Cpath d='M150 380 V150'/%3E%3Cpath d='M150 250 H120 V198'/%3E%3Cpath d='M150 228 H184 V182'/%3E%3C/g%3E%3C/svg%3E");
+  --dune-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cpath fill='%232a1c0e' d='M0 380 Q120 322 300 350 L300 380 Z'/%3E%3Cg fill='none' stroke='%23241708' stroke-width='20' stroke-linecap='round'%3E%3Cpath d='M150 380 V150'/%3E%3Cpath d='M150 250 H120 V198'/%3E%3Cpath d='M150 228 H184 V182'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* polar — fir tree over a snow mound */
+  --pine-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cpath fill='%23152430' d='M0 380 Q120 344 300 362 L300 380 Z'/%3E%3Cg fill='%230e1a24'%3E%3Crect x='143' y='300' width='14' height='72'/%3E%3Cpath d='M150 44 L112 150 H134 L98 236 H140 L92 316 H208 L160 236 H202 L166 150 H188 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --pine-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cpath fill='%23152430' d='M0 380 Q120 344 300 362 L300 380 Z'/%3E%3Cg fill='%230e1a24'%3E%3Crect x='143' y='300' width='14' height='72'/%3E%3Cpath d='M150 44 L112 150 H134 L98 236 H140 L92 316 H208 L160 236 H202 L166 150 H188 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* plains — a tuft of tall grass */
+  --grass-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg fill='none' stroke='%23161f0c' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M110 380 Q100 320 80 285'/%3E%3Cpath d='M135 380 Q135 300 150 245'/%3E%3Cpath d='M160 380 Q172 312 200 272'/%3E%3Cpath d='M185 380 Q198 326 224 296'/%3E%3Cpath d='M92 380 Q86 336 70 306'/%3E%3C/g%3E%3C/svg%3E");
+  --grass-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cg fill='none' stroke='%23161f0c' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M110 380 Q100 320 80 285'/%3E%3Cpath d='M135 380 Q135 300 150 245'/%3E%3Cpath d='M160 380 Q172 312 200 272'/%3E%3Cpath d='M185 380 Q198 326 224 296'/%3E%3Cpath d='M92 380 Q86 336 70 306'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+body[data-biome="desert"] {
+  background: radial-gradient(140% 110% at 50% -10%, #3a2b16 0%, #2a1f11 48%, #17110a 100%);
+  --fern-l: var(--dune-l); --fern-r: var(--dune-r);
+}
+body[data-biome="polar"] {
+  background: radial-gradient(140% 110% at 50% -10%, #1b2c3a 0%, #101c27 48%, #070d13 100%);
+  --fern-l: var(--pine-l); --fern-r: var(--pine-r);
+}
+body[data-biome="plains"] {
+  background: radial-gradient(140% 110% at 50% -10%, #2c3319 0%, #1f2612 48%, #12160a 100%);
+  --fern-l: var(--grass-l); --fern-r: var(--grass-r);
 }

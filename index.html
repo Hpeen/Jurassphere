@@ -59,13 +59,28 @@
 
   <aside id="panel" class="panel" aria-hidden="true">
     <button id="panel-close" class="panel-close" aria-label="Close record">&times;</button>
-    <div class="panel-image" id="panel-image"></div>
-    <p class="panel-record">Field Record</p>
-    <h2 id="panel-title" class="panel-title"></h2>
-    <div id="panel-era" class="panel-era"></div>
-    <div id="panel-coords" class="panel-coords"></div>
-    <div id="panel-location" class="panel-location"></div>
-    <p id="panel-desc" class="panel-desc"></p>
+    <div class="panel-scroll">
+      <div class="panel-image" id="panel-image"></div>
+      <p class="panel-record">Field Record</p>
+      <div class="panel-head">
+        <h2 id="panel-title" class="panel-title"></h2>
+        <button id="panel-say" class="panel-say" type="button" aria-label="Hear the name" title="Hear the name">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9v6h3.5L12 19V5L7.5 9H4z" />
+            <path d="M15.5 8.5a4.5 4.5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <p id="panel-phonetic" class="panel-phonetic"></p>
+      <div id="panel-era" class="panel-era"></div>
+      <div id="panel-badges" class="panel-badges"></div>
+      <div id="panel-size" class="panel-size"></div>
+      <div id="panel-coords" class="panel-coords"></div>
+      <div id="panel-age" class="panel-age"></div>
+      <div id="panel-location" class="panel-location"></div>
+      <p id="panel-desc" class="panel-desc"></p>
+      <a id="panel-source" class="panel-source" target="_blank" rel="noopener"></a>
+    </div>
     <svg viewBox="0 0 100 120" aria-hidden="true" style="position:absolute;right:30px;bottom:96px;width:24px;fill:rgba(93,72,38,.30);transform:rotate(14deg)"><use href="#track"/></svg>
     <svg viewBox="0 0 100 120" aria-hidden="true" style="position:absolute;right:64px;bottom:72px;width:19px;fill:rgba(93,72,38,.22);transform:rotate(-4deg)"><use href="#track"/></svg>
     <div class="strata" aria-hidden="true"></div>

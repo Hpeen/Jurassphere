@@ -9,10 +9,12 @@ The fossil data comes live from the Paleobiology Database, a public science API,
 ## Features
 - A 3D globe you can spin and zoom, built with globe.gl
 - Live fossil data from the Paleobiology Database, with a curated fallback for when the API is down
-- Click a marker to open its field record
+- Click a marker to open a field record that fills itself in from Wikipedia (plain-language description + a real photo), so it reads for anyone, not just specialists
+- A size-vs-human chart, a click-to-hear pronunciation, and diet/length/weight badges on each record
+- The whole scene reskins to the dig's region: jungle, desert, polar, or plains
 - Filter by period: Triassic, Jurassic, or Cretaceous
 - Search a dinosaur by name and fly the camera to its sites
-- Intro animation and optional ambient sound
+- Intro animation and optional ambient sound (rainforest bed with an occasional distant roar)
 
 ## Run locally
 The site uses ES modules, so it needs a local server instead of opening the file directly:

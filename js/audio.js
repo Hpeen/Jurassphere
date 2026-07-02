@@ -2,7 +2,7 @@
 // Real recordings live in assets/audio/ (see CREDITS in README).
 const AMBIENCE_URL = "assets/audio/jungle-ambience.mp3";
 const ROAR_URL = "assets/audio/dino-roar.mp3";
-const AMBIENCE_VOLUME = 0.34;
+const AMBIENCE_VOLUME = 0.18;
 
 let ambient = null;
 let roarTimer = null;
@@ -35,7 +35,7 @@ function scheduleRoar() {
   roarTimer = setTimeout(() => {
     if (!muted) {
       const roar = new Audio(ROAR_URL);
-      roar.volume = 0.45;
+      roar.volume = 0.28;
       roar.play().catch(() => {});
     }
     scheduleRoar();
