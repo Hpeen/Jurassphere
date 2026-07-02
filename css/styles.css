@@ -203,6 +203,22 @@ body::after {
   padding: 16px 22px; gap: 18px;
   background: linear-gradient(180deg, rgba(8, 15, 9, 0.92), rgba(8, 15, 9, 0.55) 64%, transparent);
 }
+
+/* Dappled canopy light drifting across the whole scene. Fixed to the
+   viewport, painted behind the HUD content, oversized so its slow wander
+   never exposes an edge. Each biome recolours this layer further down. */
+.hud::before {
+  content: ""; position: fixed; inset: -8%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(42vmax 30vmax at 12% 0%, rgba(219, 202, 128, 0.08), transparent 64%),
+    radial-gradient(34vmax 26vmax at 84% 4%, rgba(190, 208, 122, 0.07), transparent 66%),
+    radial-gradient(26vmax 20vmax at 38% 12%, rgba(214, 186, 110, 0.05), transparent 70%);
+  animation: light-drift 44s ease-in-out infinite alternate;
+}
+@keyframes light-drift {
+  from { transform: translate3d(-1.8%, -1.2%, 0) scale(1.03); opacity: 0.7; }
+  to   { transform: translate3d(1.8%, 0.8%, 0)  scale(1);    opacity: 1; }
+}
 .brand {
   display: flex; align-items: center; gap: 11px;
   font-family: var(--font-display); font-weight: 600; font-size: 1.35rem;
@@ -410,6 +426,27 @@ body::after {
    ------------------------------------------------------------ */
 .globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
 .globe:active { cursor: grabbing; }
+
+/* Ambient particle field — spores in the jungle, snow at the poles, sand
+   in the desert, seed fluff on the plains (overridden per biome below).
+   Masked away from the centre so the globe stays clear; two copies of one
+   tile at different scales give a cheap parallax. */
+.globe::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background-image: var(--spores), var(--spores);
+  background-size: 260px 260px, 430px 430px;
+  background-position: 0 0, 90px 200px;
+  opacity: 0.4;
+  -webkit-mask-image: radial-gradient(ellipse 64% 58% at 50% 48%, transparent 38%, #000 84%);
+  mask-image: radial-gradient(ellipse 64% 58% at 50% 48%, transparent 38%, #000 84%);
+  animation: spores-rise 85s linear infinite;
+}
+@keyframes spores-rise {
+  0%   { background-position: 0 0,        90px 200px; }
+  50%  { background-position: 42px -260px, 140px -230px; }
+  100% { background-position: 0 -520px,   90px -660px; }
+}
+
 .globe::after {
   content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
@@ -420,6 +457,11 @@ body::after {
     linear-gradient(180deg, rgba(6, 12, 7, 0.5), transparent 16%),
     linear-gradient(0deg, rgba(6, 12, 7, 0.55), transparent 18%),
     radial-gradient(ellipse 118% 104% at 50% 50%, transparent 54%, rgba(6, 12, 7, 0.38) 84%, rgba(4, 9, 5, 0.68) 100%);
+  animation: clearing-breathe 24s ease-in-out infinite alternate;
+}
+@keyframes clearing-breathe {
+  from { opacity: 0.84; }
+  to   { opacity: 1; }
 }
 
 /* ------------------------------------------------------------
@@ -442,6 +484,24 @@ body::after {
   overflow: hidden;
 }
 .panel.open { transform: translateX(0); }
+
+/* Ink settling onto the page — the record's entries fade in one after
+   another as the page slides in. Opacity only, so it never fights the
+   hand-placed rotations on the photo, stamp and location line. */
+.panel.open .panel-scroll > * { animation: ink-settle 0.5s ease-out backwards; }
+.panel.open .panel-scroll > :nth-child(1)  { animation-delay: 0.10s; }
+.panel.open .panel-scroll > :nth-child(2)  { animation-delay: 0.15s; }
+.panel.open .panel-scroll > :nth-child(3)  { animation-delay: 0.20s; }
+.panel.open .panel-scroll > :nth-child(4)  { animation-delay: 0.25s; }
+.panel.open .panel-scroll > :nth-child(5)  { animation-delay: 0.30s; }
+.panel.open .panel-scroll > :nth-child(6)  { animation-delay: 0.34s; }
+.panel.open .panel-scroll > :nth-child(7)  { animation-delay: 0.38s; }
+.panel.open .panel-scroll > :nth-child(8)  { animation-delay: 0.42s; }
+.panel.open .panel-scroll > :nth-child(9)  { animation-delay: 0.46s; }
+.panel.open .panel-scroll > :nth-child(10) { animation-delay: 0.50s; }
+.panel.open .panel-scroll > :nth-child(11) { animation-delay: 0.54s; }
+.panel.open .panel-scroll > :nth-child(12) { animation-delay: 0.58s; }
+@keyframes ink-settle { from { opacity: 0; } }
 
 /* cloth binding with stitches along the page's left edge */
 .panel::before {
@@ -578,10 +638,16 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before, body::after { animation: none; }
+  body::before, body::after { animation: none !important; }
   .intro .trackway use { animation: none; opacity: 1; }
   .intro { transition: none; }
   .panel { transition: none; }
+  /* still scene: no drifting light, particles, breathing or staggers */
+  .hud::before, .globe::before, .globe::after { animation: none !important; }
+  .panel.open .panel-scroll > * { animation: none !important; }
+  .size-figure .sf-dino, .size-figure .sf-human,
+  .size-figure .sf-measure, .size-figure .sf-tag,
+  .size-note { animation: none !important; }
 }
 
 /* ============================================================
@@ -636,25 +702,47 @@ body::after {
 .panel-size { margin: 18px 0 4px; }
 .size-label {
   font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em;
-  text-transform: uppercase; color: #7a5326; margin-bottom: 10px;
+  text-transform: uppercase; color: #7a5326; margin-bottom: 6px;
 }
-.size-track {
-  position: relative; height: 14px; margin-bottom: 26px; border-radius: 2px;
-  border: 1px solid rgba(70, 54, 26, 0.3);
-  background: repeating-linear-gradient(90deg, rgba(93, 72, 38, 0.12) 0 9px, rgba(93, 72, 38, 0.04) 9px 10px);
+
+/* The size sketch — inked silhouettes of the animal and a person standing
+   on a shared ground line, drawn to a common scale (built in js/panel.js).
+   The figures grow up out of the ground and a dashed surveyor's tape is
+   pulled across the animal when the record opens. */
+.size-figure { display: block; width: 100%; height: auto; margin: 2px 0 8px; overflow: visible; }
+.size-figure .sf-ground { stroke: rgba(70, 54, 26, 0.5); stroke-width: 1.25px; vector-effect: non-scaling-stroke; }
+.size-figure .sf-measure line { stroke: #8a3c20; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.size-figure .sf-measure line:first-child { stroke-dasharray: 5 4; }
+.size-figure .sf-tag {
+  font-family: var(--font-mono); fill: #7a5326;
+  letter-spacing: 0.08em; text-transform: uppercase;
 }
-.size-dino {
-  position: absolute; left: 0; top: 0; bottom: 0; border-radius: 1px;
-  background: linear-gradient(180deg, #7a5a2c, #5d4826);
+.size-figure .sf-dino  { fill: #52401f; }
+.size-figure .sf-human { fill: #8a3c20; }
+.size-figure .sf-eye   { fill: var(--page-hi); }
+
+.size-figure .sf-dino {
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: sf-rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.15) 0.05s backwards;
 }
-.size-human { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #8a3c20; transform: translateX(-1px); }
-.size-human::after {
-  content: "you"; position: absolute; top: 100%; left: 50%; margin-top: 4px;
-  transform: translateX(-50%); white-space: nowrap;
-  font-family: var(--font-mono); font-size: 0.54rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #8a3c20;
+.size-figure .sf-human {
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: sf-rise 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.15) 0.28s backwards;
 }
-.size-note { font-family: var(--font-script); font-size: 1.05rem; color: #4a3c22; transform: rotate(-0.5deg); }
+@keyframes sf-rise { from { opacity: 0; transform: translateY(4%) scale(0.72); } }
+.size-figure .sf-measure {
+  transform-box: fill-box; transform-origin: 0 50%;
+  animation: sf-draw 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.5s backwards;
+}
+@keyframes sf-draw { from { opacity: 0; transform: scaleX(0); } }
+.size-figure .sf-tag { animation: sf-fade 0.45s ease 0.8s backwards; }
+@keyframes sf-fade { from { opacity: 0; } }
+
+.size-note {
+  font-family: var(--font-script); font-size: 1.05rem; color: #4a3c22;
+  transform: rotate(-0.5deg);
+  animation: sf-fade 0.45s ease 0.9s backwards;
+}
 
 .panel-age {
   font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em;
@@ -675,25 +763,109 @@ body::after {
    and parchment record stay legible.
    ============================================================ */
 :root {
-  /* desert — saguaro cactus over a dune */
-  --dune-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cpath fill='%232a1c0e' d='M0 380 Q120 322 300 350 L300 380 Z'/%3E%3Cg fill='none' stroke='%23241708' stroke-width='20' stroke-linecap='round'%3E%3Cpath d='M150 380 V150'/%3E%3Cpath d='M150 250 H120 V198'/%3E%3Cpath d='M150 228 H184 V182'/%3E%3C/g%3E%3C/svg%3E");
-  --dune-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cpath fill='%232a1c0e' d='M0 380 Q120 322 300 350 L300 380 Z'/%3E%3Cg fill='none' stroke='%23241708' stroke-width='20' stroke-linecap='round'%3E%3Cpath d='M150 380 V150'/%3E%3Cpath d='M150 250 H120 V198'/%3E%3Cpath d='M150 228 H184 V182'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  /* polar — fir tree over a snow mound */
-  --pine-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cpath fill='%23152430' d='M0 380 Q120 344 300 362 L300 380 Z'/%3E%3Cg fill='%230e1a24'%3E%3Crect x='143' y='300' width='14' height='72'/%3E%3Cpath d='M150 44 L112 150 H134 L98 236 H140 L92 316 H208 L160 236 H202 L166 150 H188 Z'/%3E%3C/g%3E%3C/svg%3E");
-  --pine-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cpath fill='%23152430' d='M0 380 Q120 344 300 362 L300 380 Z'/%3E%3Cg fill='%230e1a24'%3E%3Crect x='143' y='300' width='14' height='72'/%3E%3Cpath d='M150 44 L112 150 H134 L98 236 H140 L92 316 H208 L160 236 H202 L166 150 H188 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  /* plains — a tuft of tall grass */
-  --grass-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg fill='none' stroke='%23161f0c' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M110 380 Q100 320 80 285'/%3E%3Cpath d='M135 380 Q135 300 150 245'/%3E%3Cpath d='M160 380 Q172 312 200 272'/%3E%3Cpath d='M185 380 Q198 326 224 296'/%3E%3Cpath d='M92 380 Q86 336 70 306'/%3E%3C/g%3E%3C/svg%3E");
-  --grass-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cg fill='none' stroke='%23161f0c' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M110 380 Q100 320 80 285'/%3E%3Cpath d='M135 380 Q135 300 150 245'/%3E%3Cpath d='M160 380 Q172 312 200 272'/%3E%3Cpath d='M185 380 Q198 326 224 296'/%3E%3Cpath d='M92 380 Q86 336 70 306'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* desert — twin-armed saguaro, layered dunes, scattered rocks */
+  --dune-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cpath fill='%2333230f' opacity='.75' d='M0 380 L0 322 Q80 296 170 320 Q240 338 300 330 L300 380 Z'/%3E%3Cg fill='%233d2b12' opacity='.9'%3E%3Cpath d='M243 348 C239 326 239 306 243 292 C245 287 251 287 253 292 C257 306 257 326 253 348 Z'/%3E%3Cpath d='M244 320 C234 318 228 310 227 298 C227 295 231 293 234 295 C235 305 238 311 245 313 Z'/%3E%3C/g%3E%3Cpath fill='%23241708' d='M0 380 L0 348 Q130 318 300 352 L300 380 Z'/%3E%3Cg fill='%23191006'%3E%3Cpath d='M143 366 C137 318 137 252 143 200 C145 186 151 179 158 179 C165 179 171 186 173 200 C179 252 179 318 173 366 Z'/%3E%3Cpath d='M145 296 C123 292 111 276 109 250 C109 244 112 240 117 240 C122 240 125 244 125 250 C127 268 134 278 147 282 Z'/%3E%3Cpath d='M171 268 C191 264 201 250 203 228 C203 222 200 218 195 218 C190 218 187 222 187 228 C185 244 179 252 169 256 Z'/%3E%3Cpath d='M60 372 C58 360 66 352 82 352 C96 352 104 360 102 372 Z'/%3E%3Cpath d='M104 374 C103 367 108 362 117 362 C125 362 130 367 129 374 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --dune-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cpath fill='%2333230f' opacity='.75' d='M0 380 L0 322 Q80 296 170 320 Q240 338 300 330 L300 380 Z'/%3E%3Cg fill='%233d2b12' opacity='.9'%3E%3Cpath d='M243 348 C239 326 239 306 243 292 C245 287 251 287 253 292 C257 306 257 326 253 348 Z'/%3E%3Cpath d='M244 320 C234 318 228 310 227 298 C227 295 231 293 234 295 C235 305 238 311 245 313 Z'/%3E%3C/g%3E%3Cpath fill='%23241708' d='M0 380 L0 348 Q130 318 300 352 L300 380 Z'/%3E%3Cg fill='%23191006'%3E%3Cpath d='M143 366 C137 318 137 252 143 200 C145 186 151 179 158 179 C165 179 171 186 173 200 C179 252 179 318 173 366 Z'/%3E%3Cpath d='M145 296 C123 292 111 276 109 250 C109 244 112 240 117 240 C122 240 125 244 125 250 C127 268 134 278 147 282 Z'/%3E%3Cpath d='M171 268 C191 264 201 250 203 228 C203 222 200 218 195 218 C190 218 187 222 187 228 C185 244 179 252 169 256 Z'/%3E%3Cpath d='M60 372 C58 360 66 352 82 352 C96 352 104 360 102 372 Z'/%3E%3Cpath d='M104 374 C103 367 108 362 117 362 C125 362 130 367 129 374 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  /* polar — drooping spruces, one behind the other, over a snow bank */
+  --pine-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cdefs%3E%3Cpath id='t' d='M78 0 C86 24 98 46 114 62 C106 60 98 56 91 51 C101 82 114 108 132 128 C122 125 111 120 101 113 C112 148 128 176 148 198 C136 194 122 187 110 178 C122 216 140 246 162 270 L-6 270 C16 246 34 216 46 178 C34 187 20 194 8 198 C28 176 44 148 55 113 C45 120 34 125 24 128 C42 108 55 82 65 51 C58 56 50 60 42 62 C58 46 70 24 78 0 Z'/%3E%3C/defs%3E%3Cuse href='%23t' fill='%23182a3a' opacity='.85' transform='translate(170 188) scale(.62)'/%3E%3Cuse href='%23t' fill='%230c1724' transform='translate(60 96)'/%3E%3Cpath fill='%23152430' d='M0 380 L0 350 Q100 330 210 350 Q260 358 300 354 L300 380 Z'/%3E%3C/svg%3E");
+  --pine-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cdefs%3E%3Cpath id='t' d='M78 0 C86 24 98 46 114 62 C106 60 98 56 91 51 C101 82 114 108 132 128 C122 125 111 120 101 113 C112 148 128 176 148 198 C136 194 122 187 110 178 C122 216 140 246 162 270 L-6 270 C16 246 34 216 46 178 C34 187 20 194 8 198 C28 176 44 148 55 113 C45 120 34 125 24 128 C42 108 55 82 65 51 C58 56 50 60 42 62 C58 46 70 24 78 0 Z'/%3E%3C/defs%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cuse href='%23t' fill='%23182a3a' opacity='.85' transform='translate(170 188) scale(.62)'/%3E%3Cuse href='%23t' fill='%230c1724' transform='translate(60 96)'/%3E%3Cpath fill='%23152430' d='M0 380 L0 350 Q100 330 210 350 Q260 358 300 354 L300 380 Z'/%3E%3C/g%3E%3C/svg%3E");
+  /* plains — a dense grass tuft, seed heads nodding, lit blades behind */
+  --grass-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg fill='none' stroke='%23233312' stroke-width='6' stroke-linecap='round' opacity='.8'%3E%3Cpath d='M96 380 Q86 318 64 280'/%3E%3Cpath d='M148 380 Q152 304 176 256'/%3E%3Cpath d='M206 380 Q220 320 248 288'/%3E%3Cpath d='M120 380 Q118 310 104 264'/%3E%3C/g%3E%3Cg fill='%23233312' opacity='.8'%3E%3Cellipse cx='60' cy='274' rx='4.5' ry='12' transform='rotate(-30 60 274)'/%3E%3Cellipse cx='254' cy='281' rx='4.5' ry='12' transform='rotate(41 254 281)'/%3E%3C/g%3E%3Cg fill='none' stroke='%23131b09' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M108 380 Q100 314 80 272'/%3E%3Cpath d='M130 380 Q128 298 116 250'/%3E%3Cpath d='M152 380 Q158 298 180 244'/%3E%3Cpath d='M176 380 Q188 312 216 274'/%3E%3Cpath d='M90 380 Q82 334 64 304'/%3E%3Cpath d='M196 380 Q208 328 232 294'/%3E%3C/g%3E%3Cg fill='%23131b09'%3E%3Cellipse cx='114' cy='240' rx='5' ry='14' transform='rotate(-14 114 240)'/%3E%3Cellipse cx='184' cy='235' rx='5' ry='14' transform='rotate(22 184 235)'/%3E%3Cellipse cx='222' cy='266' rx='4.5' ry='13' transform='rotate(36 222 266)'/%3E%3C/g%3E%3C/svg%3E");
+  --grass-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cg fill='none' stroke='%23233312' stroke-width='6' stroke-linecap='round' opacity='.8'%3E%3Cpath d='M96 380 Q86 318 64 280'/%3E%3Cpath d='M148 380 Q152 304 176 256'/%3E%3Cpath d='M206 380 Q220 320 248 288'/%3E%3Cpath d='M120 380 Q118 310 104 264'/%3E%3C/g%3E%3Cg fill='%23233312' opacity='.8'%3E%3Cellipse cx='60' cy='274' rx='4.5' ry='12' transform='rotate(-30 60 274)'/%3E%3Cellipse cx='254' cy='281' rx='4.5' ry='12' transform='rotate(41 254 281)'/%3E%3C/g%3E%3Cg fill='none' stroke='%23131b09' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M108 380 Q100 314 80 272'/%3E%3Cpath d='M130 380 Q128 298 116 250'/%3E%3Cpath d='M152 380 Q158 298 180 244'/%3E%3Cpath d='M176 380 Q188 312 216 274'/%3E%3Cpath d='M90 380 Q82 334 64 304'/%3E%3Cpath d='M196 380 Q208 328 232 294'/%3E%3C/g%3E%3Cg fill='%23131b09'%3E%3Cellipse cx='114' cy='240' rx='5' ry='14' transform='rotate(-14 114 240)'/%3E%3Cellipse cx='184' cy='235' rx='5' ry='14' transform='rotate(22 184 235)'/%3E%3Cellipse cx='222' cy='266' rx='4.5' ry='13' transform='rotate(36 222 266)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+  /* — ambient particle tiles, one per biome — */
+  --spores: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23d8dfa6'%3E%3Ccircle cx='26' cy='40' r='1.7'/%3E%3Ccircle cx='118' cy='16' r='1.1' opacity='.7'/%3E%3Ccircle cx='214' cy='58' r='1.9' opacity='.8'/%3E%3Ccircle cx='70' cy='118' r='1.2' opacity='.6'/%3E%3Ccircle cx='178' cy='148' r='1.5'/%3E%3Ccircle cx='38' cy='206' r='1.3' opacity='.7'/%3E%3Ccircle cx='236' cy='226' r='1.1' opacity='.6'/%3E%3Ccircle cx='140' cy='244' r='1.8' opacity='.8'/%3E%3C/g%3E%3C/svg%3E");
+  --sand-specks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23dcb878'%3E%3Ccircle cx='20' cy='34' r='1'/%3E%3Ccircle cx='96' cy='12' r='.8' opacity='.7'/%3E%3Ccircle cx='170' cy='48' r='1.2' opacity='.8'/%3E%3Ccircle cx='238' cy='24' r='.9' opacity='.6'/%3E%3Ccircle cx='58' cy='104' r='1.1'/%3E%3Ccircle cx='148' cy='126' r='.8' opacity='.7'/%3E%3Ccircle cx='226' cy='142' r='1.3' opacity='.8'/%3E%3Ccircle cx='34' cy='188' r='.9' opacity='.6'/%3E%3Ccircle cx='118' cy='206' r='1.2'/%3E%3Ccircle cx='196' cy='232' r='1' opacity='.7'/%3E%3Ccircle cx='250' cy='202' r='.8' opacity='.6'/%3E%3C/g%3E%3C/svg%3E");
+  --snowfall: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23e6edf2'%3E%3Ccircle cx='24' cy='30' r='2'/%3E%3Ccircle cx='104' cy='14' r='1.4' opacity='.7'/%3E%3Ccircle cx='188' cy='44' r='2.2' opacity='.85'/%3E%3Ccircle cx='246' cy='90' r='1.3' opacity='.6'/%3E%3Ccircle cx='62' cy='96' r='1.6'/%3E%3Ccircle cx='140' cy='118' r='2' opacity='.8'/%3E%3Ccircle cx='216' cy='150' r='1.4' opacity='.65'/%3E%3Ccircle cx='30' cy='170' r='1.8' opacity='.8'/%3E%3Ccircle cx='112' cy='192' r='1.3' opacity='.6'/%3E%3Ccircle cx='184' cy='222' r='2.1'/%3E%3Ccircle cx='68' cy='244' r='1.5' opacity='.75'/%3E%3Ccircle cx='244' cy='250' r='1.7' opacity='.7'/%3E%3C/g%3E%3C/svg%3E");
+  --seedheads: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cg fill='%23ddd6a4'%3E%3Ccircle cx='32' cy='48' r='1.6'/%3E%3Ccircle cx='128' cy='22' r='1.2' opacity='.7'/%3E%3Ccircle cx='222' cy='70' r='1.8' opacity='.8'/%3E%3Ccircle cx='84' cy='134' r='1.3' opacity='.6'/%3E%3Ccircle cx='186' cy='160' r='1.5'/%3E%3Ccircle cx='48' cy='216' r='1.4' opacity='.7'/%3E%3Ccircle cx='150' cy='240' r='1.7' opacity='.8'/%3E%3C/g%3E%3C/svg%3E");
 }
+
+/* — desert: still air, drifting sand, low heat-haze at the horizon — */
 body[data-biome="desert"] {
   background: radial-gradient(140% 110% at 50% -10%, #3a2b16 0%, #2a1f11 48%, #17110a 100%);
   --fern-l: var(--dune-l); --fern-r: var(--dune-r);
 }
+body[data-biome="desert"]::before,
+body[data-biome="desert"]::after { animation: none; }
+body[data-biome="desert"] .globe::before {
+  background-image: var(--sand-specks), var(--sand-specks);
+  opacity: 0.32;
+  animation: sand-drift 28s linear infinite;
+}
+@keyframes sand-drift {
+  0%   { background-position: 0 0,          90px 200px; }
+  50%  { background-position: 260px -26px,  520px 180px; }
+  100% { background-position: 520px 0,      950px 200px; }
+}
+body[data-biome="desert"] .hud::before {
+  background:
+    radial-gradient(46vmax 30vmax at 50% -6%, rgba(226, 178, 96, 0.09), transparent 64%),
+    linear-gradient(0deg, rgba(224, 168, 80, 0.07), transparent 26%);
+  animation: heat-haze 8s ease-in-out infinite alternate;
+}
+@keyframes heat-haze {
+  from { transform: translate3d(0, 0.5%, 0)  scaleY(1);     opacity: 0.65; }
+  to   { transform: translate3d(0, -0.4%, 0) scaleY(1.015); opacity: 1; }
+}
+
+/* — polar: slow wind in the spruces, snow falling, pale fog above — */
 body[data-biome="polar"] {
   background: radial-gradient(140% 110% at 50% -10%, #1b2c3a 0%, #101c27 48%, #070d13 100%);
   --fern-l: var(--pine-l); --fern-r: var(--pine-r);
 }
+body[data-biome="polar"]::before { animation-duration: 17s; }
+body[data-biome="polar"]::after  { animation-duration: 19s; }
+body[data-biome="polar"] .globe::before {
+  background-image: var(--snowfall), var(--snowfall);
+  opacity: 0.5;
+  animation: snow-fall 38s linear infinite;
+}
+@keyframes snow-fall {
+  0%   { background-position: 0 0,          90px 200px; }
+  50%  { background-position: 46px 260px,   150px 630px; }
+  100% { background-position: 0 520px,      90px 1060px; }
+}
+body[data-biome="polar"] .hud::before {
+  background:
+    radial-gradient(50vmax 26vmax at 30% -4%, rgba(196, 216, 228, 0.07), transparent 66%),
+    radial-gradient(40vmax 22vmax at 78% 2%, rgba(170, 196, 212, 0.05), transparent 68%),
+    linear-gradient(0deg, rgba(200, 220, 232, 0.04), transparent 22%);
+  animation: fog-drift 36s ease-in-out infinite alternate;
+}
+@keyframes fog-drift {
+  from { transform: translate3d(-2.4%, 0, 0);    opacity: 0.6; }
+  to   { transform: translate3d(2.4%, 0.6%, 0);  opacity: 1; }
+}
+
+/* — plains: wind through the grass, seed fluff adrift, cloud shadows — */
 body[data-biome="plains"] {
   background: radial-gradient(140% 110% at 50% -10%, #2c3319 0%, #1f2612 48%, #12160a 100%);
   --fern-l: var(--grass-l); --fern-r: var(--grass-r);
+}
+body[data-biome="plains"]::before { animation: grass-sway 5.5s ease-in-out infinite alternate; }
+body[data-biome="plains"]::after  { animation: grass-sway 6.5s ease-in-out infinite alternate-reverse; }
+@keyframes grass-sway {
+  from { transform: rotate(-1.1deg); }
+  to   { transform: rotate(1.4deg); }
+}
+body[data-biome="plains"] .globe::before {
+  background-image: var(--seedheads), var(--seedheads);
+  opacity: 0.38;
+  animation: seed-drift 55s linear infinite;
+}
+@keyframes seed-drift {
+  0%   { background-position: 0 0,          90px 200px; }
+  50%  { background-position: 260px -34px,  520px 168px; }
+  100% { background-position: 520px 0,      950px 200px; }
+}
+body[data-biome="plains"] .hud::before {
+  background:
+    radial-gradient(44vmax 22vmax at 24% 30%, rgba(8, 12, 4, 0.16), transparent 66%),
+    radial-gradient(36vmax 18vmax at 76% 58%, rgba(8, 12, 4, 0.12), transparent 68%),
+    radial-gradient(30vmax 22vmax at 60% -4%, rgba(228, 216, 160, 0.06), transparent 66%);
+  animation: cloud-pass 48s ease-in-out infinite alternate;
+}
+@keyframes cloud-pass {
+  from { transform: translate3d(-4%, 0, 0); }
+  to   { transform: translate3d(4%, 0, 0); }
 }
