@@ -43,19 +43,38 @@
       <span>Jurasasphere</span>
     </div>
     <div class="controls">
-      <input id="search" class="search" type="text" placeholder="find a dinosaur…" autocomplete="off" />
+      <div class="search-wrap">
+        <input id="search" class="search" type="text" placeholder="find a dinosaur…" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="search-suggest" aria-autocomplete="list" />
+        <ul id="search-suggest" class="suggest" role="listbox" aria-label="Matching dinosaurs" hidden></ul>
+      </div>
       <div class="eras" id="eras" role="group" aria-label="Filter by geologic period">
         <button class="era-btn active" data-era="All">All</button>
         <button class="era-btn" data-era="Triassic">Triassic</button>
         <button class="era-btn" data-era="Jurassic">Jurassic</button>
         <button class="era-btn" data-era="Cretaceous">Cretaceous</button>
       </div>
+      <button id="surprise" class="tool" type="button" title="Open a fossil record at random">Surprise&nbsp;me</button>
+      <button id="nearme" class="tool" type="button" title="Find the fossil sites nearest you">Near&nbsp;me</button>
+      <button id="daynight" class="tool" type="button" aria-pressed="false" title="Toggle a day or night globe">Day</button>
+      <button id="timeline-toggle" class="tool" type="button" aria-pressed="false" title="Scrub through geologic time">Timeline</button>
       <button id="mute" class="mute" type="button" aria-pressed="false" title="Toggle ambient sound">Sound&nbsp;·&nbsp;off</button>
     </div>
   </header>
 
   <div id="status" class="status" hidden></div>
   <main id="globe" class="globe"></main>
+
+  <!-- Deep-time scrubber: rewind the map to a single moment in the Mesozoic -->
+  <div id="timeline" class="timeline" hidden aria-hidden="true">
+    <div class="timeline-inner">
+      <span class="timeline-label">Rewind</span>
+      <input id="timeline-range" class="timeline-range" type="range"
+             min="66" max="252" value="150" step="1"
+             aria-label="Million years ago" />
+      <output id="timeline-readout" class="timeline-readout"></output>
+    </div>
+  </div>
 
   <aside id="panel" class="panel" aria-hidden="true">
     <button id="panel-close" class="panel-close" aria-label="Close record">&times;</button>

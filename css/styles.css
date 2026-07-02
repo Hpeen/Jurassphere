@@ -277,6 +277,119 @@ body::after {
   background: rgba(216, 166, 58, 0.08);
 }
 
+/* Expedition tool buttons — surprise / near-me / day-night / timeline */
+.tool {
+  background: rgba(12, 22, 13, 0.66);
+  border: 1px solid var(--line); color: var(--lichen);
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 9px 12px; border-radius: 2px; cursor: pointer;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: color 0.18s, border-color 0.18s, background-color 0.18s;
+}
+.tool:hover { color: var(--bone); border-color: rgba(216, 166, 58, 0.4); }
+.tool.active,
+.tool[aria-pressed="true"] {
+  color: var(--amber);
+  border-color: rgba(216, 166, 58, 0.55);
+  background: rgba(216, 166, 58, 0.08);
+}
+
+/* ------------------------------------------------------------
+   Search autocomplete — a specimen index dropping from the field
+   search box.
+   ------------------------------------------------------------ */
+.search-wrap { position: relative; display: inline-flex; }
+.suggest {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 21;
+  margin: 0; padding: 4px; list-style: none;
+  max-height: 46vh; overflow-y: auto;
+  background: rgba(10, 18, 11, 0.94);
+  border: 1px solid var(--line); border-radius: 2px;
+  box-shadow: 0 16px 30px rgba(3, 8, 4, 0.55);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  scrollbar-width: thin; scrollbar-color: rgba(139, 155, 120, 0.4) transparent;
+}
+.suggest-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 10px; border-radius: 2px; cursor: pointer;
+  color: var(--ink); font-family: var(--font-mono); font-size: 0.76rem;
+}
+.suggest-item:hover,
+.suggest-item.active { background: rgba(31, 58, 36, 0.72); }
+.suggest-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.suggest-era {
+  flex: 0 0 auto; font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--lichen);
+}
+.suggest-era::before {
+  content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px;
+  vertical-align: middle; border-radius: 50%; background: var(--lichen);
+}
+.suggest-era[data-era="Triassic"]::before   { background: var(--amber); }
+.suggest-era[data-era="Jurassic"]::before   { background: var(--jur); }
+.suggest-era[data-era="Cretaceous"]::before { background: var(--rust); }
+
+/* ------------------------------------------------------------
+   Timeline scrubber — a stratigraphic ruler pinned to the horizon,
+   rewinding the map to a single moment in deep time.
+   ------------------------------------------------------------ */
+.timeline {
+  position: fixed; left: 50%; bottom: 26px; z-index: 20;
+  transform: translateX(-50%) rotate(-0.3deg);
+  width: min(560px, 88vw);
+  padding: 12px 20px 14px;
+  background: linear-gradient(180deg, var(--page-hi), #e4d5b2);
+  border: 1px solid rgba(70, 54, 26, 0.4); border-radius: 3px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+.timeline-inner { display: flex; align-items: center; gap: 14px; }
+.timeline-label {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #7a5326; flex: 0 0 auto;
+}
+.timeline-readout {
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em;
+  color: var(--umber-dk); flex: 0 0 auto; min-width: 122px; text-align: right;
+}
+.timeline-range {
+  flex: 1 1 auto; -webkit-appearance: none; appearance: none;
+  height: 12px; margin: 0; background: transparent; cursor: pointer;
+  direction: rtl; /* oldest time on the left, present on the right */
+}
+/* stratigraphic track coloured by period: Triassic → Jurassic → Cretaceous */
+.timeline-range::-webkit-slider-runnable-track {
+  height: 12px; border-radius: 2px; border: 1px solid rgba(70, 54, 26, 0.4);
+  background: linear-gradient(90deg,
+    var(--amber) 0%, var(--amber) 27%,
+    var(--jur) 27%, var(--jur) 57%,
+    var(--rust) 57%, var(--rust) 100%);
+}
+.timeline-range::-moz-range-track {
+  height: 12px; border-radius: 2px; border: 1px solid rgba(70, 54, 26, 0.4);
+  background: linear-gradient(90deg,
+    var(--amber) 0%, var(--amber) 27%,
+    var(--jur) 27%, var(--jur) 57%,
+    var(--rust) 57%, var(--rust) 100%);
+}
+.timeline-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; margin-top: -4px;
+  width: 12px; height: 20px; border-radius: 2px; cursor: grab;
+  background: linear-gradient(180deg, #3a2f1a, #241c10);
+  border: 1px solid var(--page-hi);
+  box-shadow: 0 2px 4px rgba(36, 28, 16, 0.5);
+}
+.timeline-range::-moz-range-thumb {
+  width: 12px; height: 20px; border-radius: 2px; cursor: grab;
+  background: linear-gradient(180deg, #3a2f1a, #241c10);
+  border: 1px solid var(--page-hi);
+  box-shadow: 0 2px 4px rgba(36, 28, 16, 0.5);
+}
+.timeline-range:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+@media (max-width: 620px) {
+  .timeline { bottom: 14px; padding: 10px 14px; }
+  .timeline-label { display: none; }
+}
+
 /* ------------------------------------------------------------
    Status — a taped-up parchment label
    ------------------------------------------------------------ */

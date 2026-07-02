@@ -44,3 +44,19 @@ export function setPoints(globe, sites) {
 export function flyTo(globe, lat, lng) {
   globe.pointOfView({ lat, lng, altitude: 1.6 }, 1200);
 }
+
+// Swap the Earth texture between a daylight Blue Marble and a night side lit by
+// city lights, so the globe can read as day or dusk.
+export function setGlobeMode(globe, mode) {
+  if (mode === "night") {
+    globe
+      .globeImageUrl(`${IMG}/earth-night.jpg`)
+      .atmosphereColor("#4a6b96")
+      .atmosphereAltitude(0.2);
+  } else {
+    globe
+      .globeImageUrl(`${IMG}/earth-blue-marble.jpg`)
+      .atmosphereColor("#9db8d4")
+      .atmosphereAltitude(0.16);
+  }
+}
