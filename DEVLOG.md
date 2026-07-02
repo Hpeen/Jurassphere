@@ -15,3 +15,14 @@
   aesthetic: Fraunces + IBM Plex type, footprint trackway motifs, rock-strata
   textures, specimen-label era tags, earthy ochre/moss/rust palette.
 - Deployed live to GitHub Pages: https://hpeen.github.io/Jurassphere/
+
+## 2026-07-02 — Jungle redesign (v1.1)
+- Renamed the project to Jurasasphere.
+- Fixed the "black globe on a blank background" problem: swapped the near-black
+  night texture for NASA Blue Marble with topographic relief, added a starfield
+  backdrop and a thin atmosphere so the globe reads as a living planet.
+- Replaced the synthesized drone with real audio: a looping rainforest bed plus
+  a distant roar that fires at random 20–55s intervals. Both fade in and are
+  credited in the README.
+- Pushed the visual theme toward a prehistoric-jungle field expedition:
+  deeper canopy greens, amber/resin accents, ferns and fossil motifs.

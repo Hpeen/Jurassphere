@@ -1,4 +1,4 @@
-# Jurassphere
+# Jurasasphere
 
 Live site: https://hpeen.github.io/Jurassphere/
 
@@ -34,3 +34,8 @@ node --test
 
 ## Deploy
 It's hosted on GitHub Pages straight from this repo. Every push to `main` redeploys automatically. Build notes are in DEVLOG.md.
+
+## Credits
+- Globe textures: [three-globe](https://github.com/vasturiano/three-globe) example imagery (NASA Blue Marble and topography).
+- Rainforest ambience by Alexander, [Orange Free Sounds](https://orangefreesounds.com/rainforest-sounds/) — CC BY 4.0.
+- Distant roar by Alexander, [Orange Free Sounds](https://orangefreesounds.com/dinosaur-roar-sound-effect/) — CC BY-NC 4.0 (non-commercial).

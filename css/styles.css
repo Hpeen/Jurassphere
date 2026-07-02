@@ -1,26 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap");
+
 /* ============================================================
-   Jurassphere — "Field Catalogue" theme
-   A natural-history / paleontology field-guide aesthetic.
-   No neon, no glow — earthy specimen colours, footprint motifs,
-   rock-strata textures, and characterful editorial type.
+   Jurasasphere — "Expedition Journal" theme
+   A botanist-paleontologist's field expedition through a
+   prehistoric rainforest: deep canopy greens and dappled light
+   framing the globe, fern-silhouette undergrowth at the viewport
+   edges, and a parchment specimen page for every fossil record.
+   Depth comes from texture, layered foliage and real shadow —
+   never glow.
    ============================================================ */
 
 :root {
-  --bg-0: #0c110d;   /* deep charcoal-green */
-  --bg-1: #141b15;
-  --panel: #14100c;  /* dark soil */
-  --bone: #ece3cf;   /* parchment / bone */
-  --ink: #e7dfcd;    /* warm off-white text */
-  --muted: #8a9382;  /* lichen grey-green */
-  --line: #2c3a2c;   /* hairline borders */
-  --ochre: #c9a24a;  /* Triassic */
-  --moss: #7f9b63;   /* Jurassic */
-  --rust: #c25a34;   /* Cretaceous */
-  --amber: #d08a3a;  /* general accent */
+  /* — canopy — */
+  --canopy-0: #0a140c;         /* deepest jungle floor */
+  --canopy-1: #0d1a10;
+  --canopy-2: #16281a;
+  --canopy-3: #1f3a24;         /* lit understory */
+  --fern:     #6f9b4f;
+  --moss:     #8bbf5a;
+  --lichen:   #8a9a80;         /* muted grey-green */
+  --line:     rgba(139, 155, 120, 0.24);
+
+  /* — resin & rock — */
+  --amber:  #d8a63a;           /* tree resin / Triassic */
+  --resin:  #c98a2e;
+  --rust:   #c2542f;           /* terracotta / Cretaceous */
+  --jur:    #7fa24e;           /* Jurassic marker green */
+
+  /* — paper & ink — */
+  --bone:      #ece3cf;
+  --ink:       #e7dfcd;        /* light ink on dark ground */
+  --page:      #e9dcbc;        /* parchment mid-tone */
+  --page-hi:   #f2ead6;
+  --page-lo:   #dcc99f;
+  --sepia:     #5d4826;        /* drawn-ink on parchment */
+  --umber:     #3a2f1a;        /* body ink on parchment */
+  --umber-dk:  #241c10;        /* headline ink */
 
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-script: "Caveat", cursive;
+
+  /* — textures & botanical plates (inline SVG) — */
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* fern frond cluster, leaning left (front frond dark, back frond lit) */
+  --fern-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cdefs%3E%3Cpath id='p' d='M0 0C-14 -9 -36 -11 -58 -3C-38 7 -14 8 0 4Z'/%3E%3Cg id='f'%3E%3Cpath d='M127 372C114 272 116 156 139 24L146 26C126 158 124 268 136 370Z'/%3E%3Cuse href='%23p' transform='translate(124 336) rotate(-38)'/%3E%3Cuse href='%23p' transform='translate(120 306) rotate(-34)'/%3E%3Cuse href='%23p' transform='translate(117 276) rotate(-31) scale(.95)'/%3E%3Cuse href='%23p' transform='translate(116 246) rotate(-28) scale(.9)'/%3E%3Cuse href='%23p' transform='translate(116 216) rotate(-26) scale(.84)'/%3E%3Cuse href='%23p' transform='translate(118 186) rotate(-23) scale(.77)'/%3E%3Cuse href='%23p' transform='translate(121 156) rotate(-21) scale(.69)'/%3E%3Cuse href='%23p' transform='translate(125 128) rotate(-18) scale(.6)'/%3E%3Cuse href='%23p' transform='translate(129 100) rotate(-16) scale(.5)'/%3E%3Cuse href='%23p' transform='translate(133 74) rotate(-14) scale(.4)'/%3E%3Cuse href='%23p' transform='translate(137 50) rotate(-12) scale(.28)'/%3E%3Cuse href='%23p' transform='translate(128 344) scale(-1 1) rotate(-36)'/%3E%3Cuse href='%23p' transform='translate(123 314) scale(-1 1) rotate(-33)'/%3E%3Cuse href='%23p' transform='translate(120 284) scale(-.97 .97) rotate(-30)'/%3E%3Cuse href='%23p' transform='translate(118 254) scale(-.92 .92) rotate(-27)'/%3E%3Cuse href='%23p' transform='translate(118 224) scale(-.86 .86) rotate(-25)'/%3E%3Cuse href='%23p' transform='translate(120 194) scale(-.8 .8) rotate(-22)'/%3E%3Cuse href='%23p' transform='translate(123 164) scale(-.72 .72) rotate(-20)'/%3E%3Cuse href='%23p' transform='translate(126 136) scale(-.63 .63) rotate(-18)'/%3E%3Cuse href='%23p' transform='translate(130 108) scale(-.53 .53) rotate(-15)'/%3E%3Cuse href='%23p' transform='translate(134 82) scale(-.42 .42) rotate(-13)'/%3E%3Cuse href='%23p' transform='translate(138 58) scale(-.3 .3) rotate(-11)'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23f' fill='%23294727' opacity='.8' transform='rotate(-16 150 380) translate(-14 2)'/%3E%3Cuse href='%23f' fill='%23102415'/%3E%3C/svg%3E");
+
+  /* same cluster, mirrored for the right corner */
+  --fern-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 380'%3E%3Cdefs%3E%3Cpath id='p' d='M0 0C-14 -9 -36 -11 -58 -3C-38 7 -14 8 0 4Z'/%3E%3Cg id='f'%3E%3Cpath d='M127 372C114 272 116 156 139 24L146 26C126 158 124 268 136 370Z'/%3E%3Cuse href='%23p' transform='translate(124 336) rotate(-38)'/%3E%3Cuse href='%23p' transform='translate(120 306) rotate(-34)'/%3E%3Cuse href='%23p' transform='translate(117 276) rotate(-31) scale(.95)'/%3E%3Cuse href='%23p' transform='translate(116 246) rotate(-28) scale(.9)'/%3E%3Cuse href='%23p' transform='translate(116 216) rotate(-26) scale(.84)'/%3E%3Cuse href='%23p' transform='translate(118 186) rotate(-23) scale(.77)'/%3E%3Cuse href='%23p' transform='translate(121 156) rotate(-21) scale(.69)'/%3E%3Cuse href='%23p' transform='translate(125 128) rotate(-18) scale(.6)'/%3E%3Cuse href='%23p' transform='translate(129 100) rotate(-16) scale(.5)'/%3E%3Cuse href='%23p' transform='translate(133 74) rotate(-14) scale(.4)'/%3E%3Cuse href='%23p' transform='translate(137 50) rotate(-12) scale(.28)'/%3E%3Cuse href='%23p' transform='translate(128 344) scale(-1 1) rotate(-36)'/%3E%3Cuse href='%23p' transform='translate(123 314) scale(-1 1) rotate(-33)'/%3E%3Cuse href='%23p' transform='translate(120 284) scale(-.97 .97) rotate(-30)'/%3E%3Cuse href='%23p' transform='translate(118 254) scale(-.92 .92) rotate(-27)'/%3E%3Cuse href='%23p' transform='translate(118 224) scale(-.86 .86) rotate(-25)'/%3E%3Cuse href='%23p' transform='translate(120 194) scale(-.8 .8) rotate(-22)'/%3E%3Cuse href='%23p' transform='translate(123 164) scale(-.72 .72) rotate(-20)'/%3E%3Cuse href='%23p' transform='translate(126 136) scale(-.63 .63) rotate(-18)'/%3E%3Cuse href='%23p' transform='translate(130 108) scale(-.53 .53) rotate(-15)'/%3E%3Cuse href='%23p' transform='translate(134 82) scale(-.42 .42) rotate(-13)'/%3E%3Cuse href='%23p' transform='translate(138 58) scale(-.3 .3) rotate(-11)'/%3E%3C/g%3E%3C/defs%3E%3Cg transform='translate(300 0) scale(-1 1)'%3E%3Cuse href='%23f' fill='%23294727' opacity='.8' transform='rotate(-16 150 380) translate(-14 2)'/%3E%3Cuse href='%23f' fill='%23102415'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* ammonite spiral — drawn ink, for the strata band */
+  --ammonite: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 130'%3E%3Cpath d='M62 62a3 3 0 0 1 3 3 5 5 0 0 1-5 5 8 8 0 0 1-8-8 12 12 0 0 1 12-12 17.5 17.5 0 0 1 17.5 17.5 24 24 0 0 1-24 24 32 32 0 0 1-32-32 41 41 0 0 1 41-41 51 51 0 0 1 51 51' fill='none' stroke='%23473518' stroke-width='2.6' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E");
+
+  /* ammonite spiral — faint watermark for the parchment page */
+  --ammonite-faint: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 130'%3E%3Cpath d='M62 62a3 3 0 0 1 3 3 5 5 0 0 1-5 5 8 8 0 0 1-8-8 12 12 0 0 1 12-12 17.5 17.5 0 0 1 17.5 17.5 24 24 0 0 1-24 24 32 32 0 0 1-32-32 41 41 0 0 1 41-41 51 51 0 0 1 51 51' fill='none' stroke='rgba(93,72,38,0.16)' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; }
@@ -30,198 +65,408 @@ body {
   margin: 0;
   color: var(--ink);
   font-family: var(--font-body);
-  background: var(--bg-0);
+  background:
+    radial-gradient(140% 110% at 50% -10%, #182b1a 0%, #0f1d12 48%, var(--canopy-0) 100%);
   overflow: hidden;
 }
 
-/* Film-grain / sediment overlay for tactile texture (no glow) */
-.grain {
-  position: fixed; inset: 0; z-index: 40; pointer-events: none;
-  opacity: 0.05; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+::selection { background: var(--amber); color: #201806; }
+
+.search:focus-visible,
+.era-btn:focus-visible,
+.mute:focus-visible,
+.panel-close:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
 }
 
-/* ---------- Intro overlay ---------- */
+/* ------------------------------------------------------------
+   Sediment grain — tactile film over everything
+   ------------------------------------------------------------ */
+.grain {
+  position: fixed; inset: 0; z-index: 40; pointer-events: none;
+  opacity: 0.06; mix-blend-mode: overlay;
+  background-image: var(--noise);
+}
+
+/* ------------------------------------------------------------
+   Undergrowth — fern clusters rooted in the bottom corners.
+   Edges only; the globe at centre stays clear. Above the globe
+   (z1), below HUD (z20) and panel (z25).
+   ------------------------------------------------------------ */
+body::before,
+body::after {
+  content: "";
+  position: fixed; bottom: -7vmin; z-index: 14;
+  width: 42vmin; height: 54vmin;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 18px rgba(3, 8, 4, 0.45));
+}
+body::before {
+  left: -6vmin;
+  transform-origin: 24% 96%;
+  background:
+    var(--fern-l) 100% 100% / 54% auto no-repeat,
+    var(--fern-l) 0% 100% / 78% auto no-repeat;
+  animation: fern-sway 11s ease-in-out infinite alternate;
+}
+body::after {
+  right: -6vmin;
+  transform-origin: 76% 96%;
+  background:
+    var(--fern-r) 0% 100% / 54% auto no-repeat,
+    var(--fern-r) 100% 100% / 78% auto no-repeat;
+  animation: fern-sway 13s ease-in-out infinite alternate-reverse;
+}
+@keyframes fern-sway {
+  from { transform: rotate(-0.6deg); }
+  to   { transform: rotate(0.8deg); }
+}
+
+/* ------------------------------------------------------------
+   Intro overlay — dawn in the understory
+   ------------------------------------------------------------ */
 .intro {
   position: fixed; inset: 0; z-index: 30;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 0.4rem; text-align: center;
   background:
-    radial-gradient(120% 90% at 50% 8%, #1a2419 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+    radial-gradient(130% 95% at 50% 0%, var(--canopy-3) 0%, var(--canopy-2) 40%, var(--canopy-1) 72%, var(--canopy-0) 100%);
   transition: opacity 1s ease, visibility 1s ease;
 }
 .intro.hidden { opacity: 0; visibility: hidden; }
 
-.intro .trackway {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  fill: var(--moss); opacity: 0.10; pointer-events: none;
+/* dappled canopy light + closed-in edges */
+.intro::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(340px 240px at 14% 4%, rgba(219, 202, 128, 0.10), transparent 70%),
+    radial-gradient(280px 220px at 78% 0%, rgba(190, 208, 122, 0.08), transparent 70%),
+    radial-gradient(240px 200px at 44% 10%, rgba(214, 186, 110, 0.05), transparent 70%),
+    radial-gradient(ellipse 120% 105% at 50% 46%, transparent 52%, rgba(6, 12, 7, 0.45) 84%, rgba(4, 9, 5, 0.75) 100%);
 }
 
+/* undergrowth closing in on the lower corners */
+.intro::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    var(--fern-l) left -7vmin bottom -8vmin / 44vmin auto no-repeat,
+    var(--fern-l) left 16vmin bottom -18vmin / 28vmin auto no-repeat,
+    var(--fern-r) right -7vmin bottom -8vmin / 44vmin auto no-repeat,
+    var(--fern-r) right 14vmin bottom -18vmin / 28vmin auto no-repeat;
+}
+
+/* footprints pressed one after another through the clearing */
+.intro .trackway {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  fill: #90ac6b; opacity: 0.16; pointer-events: none;
+}
+.intro .trackway use { opacity: 0; animation: track-step 0.5s ease-out forwards; }
+.intro .trackway use:nth-of-type(1) { animation-delay: 0.15s; }
+.intro .trackway use:nth-of-type(2) { animation-delay: 0.40s; }
+.intro .trackway use:nth-of-type(3) { animation-delay: 0.65s; }
+.intro .trackway use:nth-of-type(4) { animation-delay: 0.90s; }
+.intro .trackway use:nth-of-type(5) { animation-delay: 1.15s; }
+.intro .trackway use:nth-of-type(6) { animation-delay: 1.40s; }
+@keyframes track-step { to { opacity: 1; } }
+
 .intro-kicker {
+  position: relative;
   font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.42em;
-  text-transform: uppercase; color: var(--ochre); margin: 0 0 0.6rem;
-  padding-bottom: 0.7rem; border-bottom: 1px solid var(--line);
+  text-transform: uppercase; color: var(--amber); margin: 0 0 0.7rem;
+  padding: 0.65rem 1.5rem;
+  border-top: 1px solid rgba(216, 166, 58, 0.4);
+  border-bottom: 1px solid rgba(216, 166, 58, 0.4);
 }
 .intro-title {
+  position: relative;
   font-family: var(--font-display);
   font-optical-sizing: auto; font-weight: 900; font-style: italic;
   font-size: clamp(3rem, 12vw, 8.5rem); line-height: 0.9; margin: 0;
   color: var(--bone); letter-spacing: -0.02em;
+  text-shadow: 0 2px 0 rgba(8, 14, 9, 0.65), 0 18px 42px rgba(0, 0, 0, 0.55);
 }
 .intro-tagline {
-  font-family: var(--font-mono); font-size: clamp(0.8rem, 1.6vw, 1rem);
-  letter-spacing: 0.18em; color: var(--muted); margin: 0.9rem 0 0;
+  position: relative;
+  font-family: var(--font-script); font-weight: 500;
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  letter-spacing: 0.02em; color: #aec584; margin: 1rem 0 0;
+  transform: rotate(-1.2deg);
 }
 
-/* ---------- HUD header ---------- */
+/* ------------------------------------------------------------
+   HUD — expedition kit strapped along the canopy line
+   ------------------------------------------------------------ */
 .hud {
   position: fixed; top: 0; left: 0; right: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 22px; gap: 18px;
-  background: linear-gradient(180deg, rgba(10,14,10,0.92), rgba(10,14,10,0.55) 70%, transparent);
+  background: linear-gradient(180deg, rgba(8, 15, 9, 0.92), rgba(8, 15, 9, 0.55) 64%, transparent);
 }
 .brand {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 11px;
   font-family: var(--font-display); font-weight: 600; font-size: 1.35rem;
   color: var(--bone); letter-spacing: 0.01em;
 }
-.brand-mark { width: 18px; height: 22px; fill: var(--ochre); transform: rotate(-12deg); }
+.brand-mark { width: 19px; height: 23px; fill: var(--amber); transform: rotate(-14deg); }
 
-.controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
 .search {
-  background: rgba(10,14,10,0.6);
+  background: rgba(10, 18, 11, 0.66);
   border: 1px solid var(--line); color: var(--ink);
   font-family: var(--font-mono); font-size: 0.82rem;
   padding: 9px 14px; border-radius: 2px; outline: none; min-width: 210px;
-  transition: border-color 0.2s;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s, background-color 0.2s;
 }
-.search::placeholder { color: var(--muted); }
-.search:focus { border-color: var(--ochre); }
+.search::placeholder { color: var(--lichen); }
+.search:focus { border-color: var(--amber); background: rgba(10, 18, 11, 0.82); }
 
-/* Era filter — museum specimen tags */
-.eras { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+/* Era filter — punched specimen tags on a line */
+.eras { display: flex; gap: 7px; }
 .era-btn {
   position: relative;
-  background: transparent; border: none; border-left: 1px solid var(--line);
-  color: var(--muted); cursor: pointer;
+  background: rgba(12, 22, 13, 0.66);
+  border: 1px solid var(--line); border-radius: 2px;
+  color: var(--lichen); cursor: pointer;
   font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
-  text-transform: uppercase; padding: 9px 13px; transition: color 0.18s, background 0.18s;
+  text-transform: uppercase; padding: 9px 12px 9px 21px;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: color 0.18s, background-color 0.18s, border-color 0.18s;
 }
-.era-btn:first-child { border-left: none; }
+/* punched tag hole */
+.era-btn::after {
+  content: ""; position: absolute; left: 7px; top: 50%;
+  width: 5px; height: 5px; transform: translateY(-50%);
+  border-radius: 50%; background: var(--canopy-0);
+  box-shadow: 0 0 0 1.5px rgba(236, 227, 207, 0.35);
+}
+/* era swatch dot */
 .era-btn::before {
   content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px;
-  vertical-align: middle; border-radius: 50%; background: currentColor; opacity: 0.55;
+  vertical-align: middle; border-radius: 50%; background: currentColor; opacity: 0.5;
 }
-.era-btn[data-era="Triassic"]::before { background: var(--ochre); opacity: 1; }
-.era-btn[data-era="Jurassic"]::before { background: var(--moss); opacity: 1; }
+.era-btn[data-era="Triassic"]::before   { background: var(--amber); opacity: 1; }
+.era-btn[data-era="Jurassic"]::before   { background: var(--jur); opacity: 1; }
 .era-btn[data-era="Cretaceous"]::before { background: var(--rust); opacity: 1; }
-.era-btn:hover { color: var(--ink); background: rgba(201,162,74,0.06); }
-.era-btn.active { color: var(--bg-0); background: var(--bone); }
-.era-btn.active::before { opacity: 1; }
+.era-btn:hover { color: var(--bone); background: rgba(31, 58, 36, 0.7); border-color: rgba(216, 166, 58, 0.4); }
+.era-btn.active {
+  color: var(--umber-dk);
+  background: linear-gradient(180deg, var(--page-hi), #e4d5b2);
+  border-color: rgba(236, 227, 207, 0.45);
+  box-shadow: inset 0 -3px 0 rgba(58, 48, 29, 0.35);
+}
+.era-btn.active::after { box-shadow: 0 0 0 1.5px rgba(58, 48, 29, 0.45); }
+.era-btn.active[data-era="Triassic"]   { box-shadow: inset 0 -3px 0 var(--amber); }
+.era-btn.active[data-era="Jurassic"]   { box-shadow: inset 0 -3px 0 var(--jur); }
+.era-btn.active[data-era="Cretaceous"] { box-shadow: inset 0 -3px 0 var(--rust); }
 
 .mute {
-  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  background: rgba(12, 22, 13, 0.66);
+  border: 1px solid var(--line); color: var(--lichen);
   font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 9px 12px; border-radius: 2px; cursor: pointer;
-  transition: color 0.18s, border-color 0.18s;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: color 0.18s, border-color 0.18s, background-color 0.18s;
 }
-.mute:hover { color: var(--ink); border-color: var(--ochre); }
-.mute[aria-pressed="true"] { color: var(--ochre); border-color: var(--ochre); }
+.mute:hover { color: var(--bone); border-color: rgba(216, 166, 58, 0.4); }
+.mute[aria-pressed="true"] {
+  color: var(--amber);
+  border-color: rgba(216, 166, 58, 0.55);
+  background: rgba(216, 166, 58, 0.08);
+}
 
-/* ---------- Status label ---------- */
+/* ------------------------------------------------------------
+   Status — a taped-up parchment label
+   ------------------------------------------------------------ */
 .status {
-  position: fixed; top: 78px; left: 50%; transform: translateX(-50%); z-index: 20;
-  background: var(--bone); color: var(--bg-0);
+  position: fixed; top: 78px; left: 50%; z-index: 20;
+  transform: translateX(-50%) rotate(-0.6deg);
+  background: linear-gradient(180deg, var(--page-hi), #e6d7b4);
+  border: 1px solid rgba(70, 54, 26, 0.4);
+  color: #2b2213;
   font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em;
-  padding: 7px 15px; border-radius: 2px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  padding: 7px 16px; border-radius: 2px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
 }
 
-/* ---------- Globe ---------- */
-.globe { position: fixed; inset: 0; z-index: 1; }
+/* ------------------------------------------------------------
+   Globe — the clearing. Canopy shade and dappled light frame
+   the edges only; centre stays untouched and interactive.
+   ------------------------------------------------------------ */
+.globe { position: fixed; inset: 0; z-index: 1; cursor: grab; }
+.globe:active { cursor: grabbing; }
+.globe::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(320px 220px at 10% 4%, rgba(219, 202, 128, 0.09), transparent 70%),
+    radial-gradient(260px 200px at 88% 2%, rgba(190, 208, 122, 0.07), transparent 70%),
+    radial-gradient(300px 240px at 4% 92%, rgba(140, 180, 90, 0.07), transparent 70%),
+    radial-gradient(280px 220px at 96% 92%, rgba(214, 180, 110, 0.06), transparent 70%),
+    linear-gradient(180deg, rgba(6, 12, 7, 0.5), transparent 16%),
+    linear-gradient(0deg, rgba(6, 12, 7, 0.55), transparent 18%),
+    radial-gradient(ellipse 118% 104% at 50% 50%, transparent 54%, rgba(6, 12, 7, 0.38) 84%, rgba(4, 9, 5, 0.68) 100%);
+}
 
-/* ---------- Slide-in Field Record ---------- */
+/* ------------------------------------------------------------
+   Field Record panel — a parchment page stitched into the
+   expedition journal, sliding in over the jungle.
+   ------------------------------------------------------------ */
 .panel {
   position: fixed; top: 0; right: 0; z-index: 25; height: 100%;
-  width: min(390px, 90vw); padding: 70px 30px 30px;
+  width: min(392px, 92vw); padding: 66px 28px 84px 46px;
+  color: var(--umber);
   background:
-    linear-gradient(180deg, #191308 0%, var(--panel) 60%, #0d0a06 100%);
-  border-left: 3px solid var(--ochre);
-  box-shadow: -16px 0 44px rgba(0,0,0,0.5);
+    var(--ammonite-faint) right -48px bottom 66px / 230px auto no-repeat,
+    linear-gradient(160deg, #f1e8d3 0%, var(--page) 55%, var(--page-lo) 100%);
+  box-shadow:
+    -26px 0 54px rgba(4, 8, 5, 0.55),
+    inset 0 0 90px rgba(112, 84, 40, 0.2),
+    inset 0 0 8px rgba(112, 84, 40, 0.12);
   transform: translateX(105%);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
 }
 .panel.open { transform: translateX(0); }
 
+/* cloth binding with stitches along the page's left edge */
+.panel::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; z-index: 1;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 10px, rgba(232, 222, 200, 0.42) 10px 15px) 8px 0 / 2px 100% no-repeat,
+    linear-gradient(90deg, #0f1e12, #21391f 60%, #16291a);
+  box-shadow: 3px 0 6px rgba(31, 24, 10, 0.3);
+}
+
+/* paper fibre over the whole page */
+.panel::after {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background-image: var(--noise);
+  mix-blend-mode: multiply; opacity: 0.07;
+}
+
 .panel-close {
   position: absolute; top: 18px; right: 20px; z-index: 2;
-  width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 2px;
-  background: transparent; color: var(--muted);
-  font-size: 1.4rem; line-height: 1; cursor: pointer; transition: color 0.18s, border-color 0.18s;
+  width: 34px; height: 34px; border: 1px solid rgba(70, 54, 26, 0.45); border-radius: 2px;
+  background: transparent; color: var(--sepia);
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+  transition: color 0.18s, background-color 0.18s, border-color 0.18s;
 }
-.panel-close:hover { color: var(--bone); border-color: var(--ochre); }
+.panel-close:hover { color: var(--page-hi); background: var(--umber-dk); border-color: var(--umber-dk); }
 
+/* the specimen plate — a taped-in photograph */
 .panel-image {
-  height: 168px; border-radius: 2px; margin-bottom: 20px;
+  position: relative;
+  height: 168px; margin: 4px 2px 24px;
   background-size: cover; background-position: center;
-  border: 1px solid var(--line);
+  border: 7px solid #f6efdd;
+  outline: 1px solid rgba(70, 54, 26, 0.35);
+  transform: rotate(-0.7deg);
+  box-shadow: 0 6px 14px rgba(60, 45, 20, 0.3);
+}
+.panel-image::before {
+  content: ""; position: absolute; top: -18px; left: 50%; z-index: 2;
+  width: 86px; height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(224, 206, 158, 0.72);
+  box-shadow: 0 1px 2px rgba(60, 45, 20, 0.28);
 }
 .panel-image.placeholder {
   display: flex; align-items: center; justify-content: center;
   background:
-    repeating-linear-gradient(180deg, #1b140b 0 12px, #191208 12px 24px);
-  border-style: dashed;
+    repeating-linear-gradient(180deg, transparent 0 22px, rgba(93, 72, 38, 0.14) 22px 23px),
+    linear-gradient(180deg, #eee2c6, #e5d5ae);
 }
 .panel-image.placeholder::after {
-  content: ""; width: 70px; height: 84px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%237f9b63'%3E%3Cellipse cx='50' cy='86' rx='16' ry='22'/%3E%3Cpath d='M50 66C45 40 47 22 50 12 53 22 55 40 50 66Z'/%3E%3Cpath d='M39 72C27 52 21 40 17 30 29 37 39 51 45 66Z'/%3E%3Cpath d='M61 72C73 52 79 40 83 30 71 37 61 51 55 66Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  content: ""; width: 66px; height: 80px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%238a6f35'%3E%3Cellipse cx='50' cy='86' rx='16' ry='22'/%3E%3Cpath d='M50 66C45 40 47 22 50 12 53 22 55 40 50 66Z'/%3E%3Cpath d='M39 72C27 52 21 40 17 30 29 37 39 51 45 66Z'/%3E%3Cpath d='M61 72C73 52 79 40 83 30 71 37 61 51 55 66Z'/%3E%3C/svg%3E") center / contain no-repeat;
   opacity: 0.55; transform: rotate(-8deg);
 }
 
+/* rubber-stamped record header */
 .panel-record {
-  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.34em;
-  text-transform: uppercase; color: var(--ochre); margin: 0 0 6px;
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: rgba(156, 61, 36, 0.85);
+  border: 1px solid rgba(156, 61, 36, 0.5);
+  padding: 4px 10px 4px 13px; margin: 0 0 12px;
+  transform: rotate(-1.4deg);
 }
 .panel-title {
   font-family: var(--font-display); font-weight: 600; font-style: italic;
-  font-size: 1.75rem; line-height: 1.05; margin: 0 0 14px; color: var(--bone);
+  font-size: 1.9rem; line-height: 1.04; margin: 0 0 14px; color: var(--umber-dk);
 }
 .panel-era {
-  display: inline-block; font-family: var(--font-mono); font-size: 0.68rem;
+  display: inline-block; font-family: var(--font-mono); font-size: 0.66rem;
   letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 4px 11px; border-radius: 2px; color: var(--bg-0); background: var(--muted);
+  padding: 4px 11px; border-radius: 2px;
+  color: #221808; background: #9aa184;
+  border: 1px solid rgba(36, 28, 16, 0.28);
 }
-.panel-era[data-era="Triassic"] { background: var(--ochre); }
-.panel-era[data-era="Jurassic"] { background: var(--moss); }
-.panel-era[data-era="Cretaceous"] { background: var(--rust); }
+.panel-era[data-era="Triassic"]   { background: var(--amber); }
+.panel-era[data-era="Jurassic"]   { background: var(--jur); }
+.panel-era[data-era="Cretaceous"] { background: var(--rust); color: var(--bone); }
 
 .panel-coords {
-  font-family: var(--font-mono); font-size: 0.78rem; color: var(--ochre);
-  margin: 16px 0 4px; letter-spacing: 0.02em;
+  font-family: var(--font-mono); font-size: 0.78rem; color: #7a5326;
+  margin: 18px 0 2px; letter-spacing: 0.02em;
 }
 .panel-location {
-  font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted);
-  margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px solid var(--line);
+  font-family: var(--font-script); font-size: 1.2rem; font-weight: 500;
+  color: #4a3c22; margin: 0 0 16px; padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(58, 48, 29, 0.35);
+  transform: rotate(-0.4deg);
 }
-.panel-desc { font-size: 0.98rem; line-height: 1.65; color: var(--ink); }
+.panel-desc {
+  font-size: 0.95rem; line-height: 1.72; color: var(--umber); margin: 0;
+}
+.panel-desc::first-letter {
+  font-family: var(--font-display); font-weight: 900; font-style: normal;
+  font-size: 3em; line-height: 0.78; float: left;
+  padding: 5px 8px 0 0; color: #8a3c20;
+}
 
-/* Rock-strata band anchored to the bottom of the record */
+/* ------------------------------------------------------------
+   Strata — a drawn stratigraphic column across the page foot,
+   an ammonite bedded into the sediment
+   ------------------------------------------------------------ */
 .strata {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(201,162,74,0.10) 0 6px,
-    rgba(194,90,52,0.08) 6px 13px,
-    rgba(127,155,99,0.08) 13px 22px,
-    rgba(0,0,0,0.16) 22px 30px
-  );
-  border-top: 1px solid var(--line); opacity: 0.8;
+  position: absolute; left: 18px; right: 0; bottom: 0; height: 56px; z-index: 2;
+  pointer-events: none;
+  background:
+    var(--ammonite) right 18px bottom 6px / 46px auto no-repeat,
+    repeating-linear-gradient(
+      178deg,
+      rgba(122, 94, 48, 0.42) 0 9px,
+      rgba(93, 74, 38, 0.26) 9px 12px,
+      rgba(150, 122, 66, 0.38) 12px 23px,
+      rgba(94, 106, 58, 0.34) 23px 31px,
+      rgba(160, 94, 52, 0.34) 31px 40px,
+      rgba(80, 64, 34, 0.32) 40px 48px,
+      rgba(122, 94, 48, 0.38) 48px 56px
+    );
+  border-top: 1px solid rgba(70, 54, 26, 0.55);
 }
 
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
 @media (max-width: 620px) {
+  .hud { padding: 12px 14px; gap: 10px; }
   .brand span { display: none; }
-  .search { min-width: 150px; }
-  .era-btn { padding: 8px 9px; }
+  .search { min-width: 0; flex: 1 1 130px; }
+  .era-btn { padding: 8px 8px 8px 18px; font-size: 0.6rem; letter-spacing: 0.08em; }
+  .mute { padding: 8px 9px; }
+  .status { top: 122px; }
+  body::before, body::after { width: 34vmin; height: 44vmin; opacity: 0.85; }
+  .panel { width: min(392px, 94vw); padding: 58px 20px 76px 40px; }
+  .intro::after { opacity: 0.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none; }
+  .intro .trackway use { animation: none; opacity: 1; }
+  .intro { transition: none; }
+  .panel { transition: none; }
 }

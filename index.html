@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jurassphere — A Field Guide to Fossil Sites on a 3D Globe</title>
+  <title>Jurasasphere — A Field Guide to Fossil Sites on a 3D Globe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -32,14 +32,15 @@
       <use href="#track" x="760" y="80"  width="46" transform="rotate(-6 783 103)" />
     </svg>
     <p class="intro-kicker">Est. Mesozoic · Field Catalogue N°&#8202;01</p>
-    <h1 class="intro-title">Jurassphere</h1>
+    <h1 class="intro-title">Jurasasphere</h1>
     <p class="intro-tagline">Spin the Earth. Unearth the dinosaurs.</p>
+    <p class="intro-tagline" style="font-size:1.05rem;margin-top:2.4rem;opacity:.7;transform:rotate(-.8deg)">— from the notebooks of the Jurasasphere expedition —</p>
   </div>
 
   <header class="hud">
     <div class="brand">
       <svg class="brand-mark" viewBox="0 0 100 120" aria-hidden="true"><use href="#track" /></svg>
-      <span>Jurassphere</span>
+      <span>Jurasasphere</span>
     </div>
     <div class="controls">
       <input id="search" class="search" type="text" placeholder="find a dinosaur…" autocomplete="off" />
@@ -65,6 +66,8 @@
     <div id="panel-coords" class="panel-coords"></div>
     <div id="panel-location" class="panel-location"></div>
     <p id="panel-desc" class="panel-desc"></p>
+    <svg viewBox="0 0 100 120" aria-hidden="true" style="position:absolute;right:30px;bottom:96px;width:24px;fill:rgba(93,72,38,.30);transform:rotate(14deg)"><use href="#track"/></svg>
+    <svg viewBox="0 0 100 120" aria-hidden="true" style="position:absolute;right:64px;bottom:72px;width:19px;fill:rgba(93,72,38,.22);transform:rotate(-4deg)"><use href="#track"/></svg>
     <div class="strata" aria-hidden="true"></div>
   </aside>
 

@@ -1,24 +1,32 @@
 // Wraps the global `Globe` from the globe.gl CDN script.
 const ERA_COLORS = {
-  Triassic: "#c9a24a",  // ochre
-  Jurassic: "#7f9b63",  // moss
-  Cretaceous: "#c25a34" // rust
+  Triassic: "#d8a63a",  // amber / resin
+  Jurassic: "#8bbf5a",  // fern green
+  Cretaceous: "#c2542f" // terracotta rust
 };
+
+const IMG = "//unpkg.com/three-globe/example/img";
 
 export function createGlobe(el, onPointClick) {
   const globe = Globe()(el)
-    .globeImageUrl("//unpkg.com/three-globe/example/img/earth-dark.jpg")
-    .backgroundColor("rgba(0,0,0,0)")
-    .pointAltitude(0.01)
-    .pointRadius(0.35)
-    .pointColor((d) => ERA_COLORS[d.era] || "#f0a437")
+    // A living daytime Earth instead of the old near-black night texture,
+    // with topographic relief and a starfield so the globe never floats in a void.
+    .globeImageUrl(`${IMG}/earth-blue-marble.jpg`)
+    .bumpImageUrl(`${IMG}/earth-topology.png`)
+    .backgroundImageUrl(`${IMG}/night-sky.png`)
+    .showAtmosphere(true)
+    .atmosphereColor("#9db8d4")
+    .atmosphereAltitude(0.16)
+    .pointAltitude(0.02)
+    .pointRadius(0.34)
+    .pointColor((d) => ERA_COLORS[d.era] || "#d8a63a")
     .pointLabel((d) => `${d.title} — ${d.era}`)
     .onPointClick((d) => onPointClick(d));
 
   // Auto-spin until the user interacts.
   const controls = globe.controls();
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.6;
+  controls.autoRotateSpeed = 0.55;
   el.addEventListener("pointerdown", () => (controls.autoRotate = false), { once: true });
 
   window.addEventListener("resize", () => {
